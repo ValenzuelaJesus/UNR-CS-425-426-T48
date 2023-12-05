@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
+
+    <!-- Add the FrameLayout with PreviewView for CameraX -->
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Camera Preview -->
+        <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <!-- Banner View -->
+        <View
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"/>
+    </FrameLayout>
+
+    <!-- Custom Banner View -->
+    <RelativeLayout
+            android:id="@+id/arbanner"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@android:color/darker_gray">
+
+        <!-- "AR SCANNER" text adjusted towards the bottom -->
+        <TextView
+                android:id="@+id/tvArScanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AR SCANNER"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:layout_centerInParent="true"/> <!-- Adjust margin as needed -->
+
+        <!-- "BACK" button on the top left -->
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_color"
+                android:text="BACK"
+                android:textColor="@android:color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"/>
+
+        <!-- "SEARCH" button on the top right -->
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_color"
+                android:text="SEARCH"
+                android:textColor="@android:color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"/>
+    </RelativeLayout>
+
+    <!-- White Banner at the bottom -->
+    <RelativeLayout
+            android:id="@+id/whiteBanner"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:background="@android:color/white"
+            android:layout_gravity="bottom">
+
+        <TextView
+                android:id="@+id/tvTipDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Align the Camera to the Center of a Building"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:textStyle="bold" android:textAlignment="center" android:layout_marginTop="15dp"/>
+
+        <!-- Information icon -->
+        <ImageView
+                android:id="@+id/infoIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_menu_info_details"
+                android:layout_above="@+id/tvTipDescription"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"/>
+        <!-- Centered text at the bottom -->
+    </RelativeLayout>
+
+    <!-- White Square with hollowed-out center -->
+    <RelativeLayout
+            android:id="@+id/whiteSquare"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent">
+
+        <!-- Camera guide text -->
+        <TextView
+                android:id="@+id/tvCameraGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Searching Environment..."
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:layout_above="@+id/hollowedOutSquare"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="18dp"
+                android:layout_marginStart="24dp"/>
+
+        <!-- Hollowed-out square -->
+        <FrameLayout
+                android:id="@+id/hollowedOutSquare"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/hollowed_out_square"/>
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

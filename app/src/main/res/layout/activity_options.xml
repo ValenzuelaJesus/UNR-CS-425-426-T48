@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".Options_activity" android:id="@+id/coordinatorLayout" android:background="#FFFFFF">
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:text="EXIT"
+                android:background="@android:color/holo_red_light"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/exitbutton"
+                android:layout_marginTop="32dp" app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="16dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:text="Color Blind Mode"
+                android:background="@drawable/button_color"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/colorblindbutton"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" android:layout_marginBottom="64dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/resetoptionsbutton"
+                app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView
+                android:src="@drawable/unr_wolf_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/imageView4"
+                app:layout_constraintTop_toBottomOf="@+id/resetoptionsbutton" android:layout_marginBottom="21dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:text="Reset Options"
+                android:background="@drawable/button_color"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/resetoptionsbutton"
+                app:layout_constraintTop_toBottomOf="@+id/colorblindbutton" android:layout_marginEnd="20dp"
+                android:layout_marginBottom="61dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView4"
+                app:layout_constraintBottom_toTopOf="@+id/imageView4"/>
+        <ImageView
+                android:src="@drawable/university_logo_rgb_vertical_blue"
+                android:layout_width="0dp"
+                android:layout_height="0dp" android:id="@+id/imageView5"
+                android:layout_marginTop="6dp" app:layout_constraintEnd_toStartOf="@+id/exitbutton"
+                android:layout_marginBottom="82dp" app:layout_constraintBottom_toTopOf="@+id/colorblindbutton"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="32dp" android:layout_marginEnd="106dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
