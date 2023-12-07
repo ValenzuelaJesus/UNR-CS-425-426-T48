@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
+
                 Intent i = new Intent(MainActivity.this,Search_activity.class);
                 startActivity(i);
             }
 
 
         });
-        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+        binding.menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // SEARCH BUTTON FUNCTIONALITY WILL GO HERE

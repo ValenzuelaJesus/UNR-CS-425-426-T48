@@ -9,21 +9,31 @@
         tools:context=".Options_activity" android:id="@+id/coordinatorLayout" android:background="#FFFFFF">
 
         <androidx.appcompat.widget.AppCompatButton
-                android:text="EXIT"
-                android:background="@android:color/holo_red_light"
-                android:textColor="@android:color/black"
+                android:text="My Instructors"
+                android:background="@drawable/button_color"
+                android:textColor="@android:color/white"
+                android:layout_width="182dp"
+                android:layout_height="57dp" android:id="@+id/myIntructors"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" android:layout_marginBottom="26dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/colorblindbutton"
+                app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:text="BACK"
+                android:background="@drawable/button_color"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/exitbutton"
-                android:layout_marginTop="32dp" app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginTop="35dp" app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="34dp" android:layout_marginEnd="102dp"
+        />
         <androidx.appcompat.widget.AppCompatButton
                 android:text="Color Blind Mode"
                 android:background="@drawable/button_color"
                 android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/colorblindbutton"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" android:layout_marginBottom="64dp"
+                android:layout_width="185dp"
+                android:layout_height="58dp" android:id="@+id/colorblindbutton"
+                app:layout_constraintTop_toBottomOf="@+id/myIntructors" android:layout_marginBottom="164dp"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/resetoptionsbutton"
                 app:layout_constraintStart_toStartOf="parent"/>
         <ImageView
@@ -37,19 +47,18 @@
                 android:text="Reset Options"
                 android:background="@drawable/button_color"
                 android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/resetoptionsbutton"
-                app:layout_constraintTop_toBottomOf="@+id/colorblindbutton" android:layout_marginEnd="20dp"
-                android:layout_marginBottom="61dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                app:layout_constraintBottom_toTopOf="@+id/imageView4"/>
+                android:layout_width="186dp"
+                android:layout_height="43dp" android:id="@+id/resetoptionsbutton"
+                app:layout_constraintTop_toBottomOf="@+id/colorblindbutton" android:layout_marginBottom="14dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/imageView4"
+                app:layout_constraintStart_toStartOf="parent"/>
         <ImageView
                 android:src="@drawable/university_logo_rgb_vertical_blue"
                 android:layout_width="0dp"
                 android:layout_height="0dp" android:id="@+id/imageView5"
-                android:layout_marginTop="6dp" app:layout_constraintEnd_toStartOf="@+id/exitbutton"
-                android:layout_marginBottom="82dp" app:layout_constraintBottom_toTopOf="@+id/colorblindbutton"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="32dp" android:layout_marginEnd="106dp"/>
+                app:layout_constraintStart_toEndOf="@+id/exitbutton"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/myIntructors" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

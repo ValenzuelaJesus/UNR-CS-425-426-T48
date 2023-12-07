@@ -53,7 +53,7 @@ public class Options_activity extends AppCompatActivity {
         binding.exitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
+
                 Intent i = new Intent(Options_activity.this, MainMenu.class);
                 startActivity(i);
             }

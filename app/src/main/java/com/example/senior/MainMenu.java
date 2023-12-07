@@ -69,7 +69,7 @@ public class MainMenu extends AppCompatActivity {
         binding.mainOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
+
                 Intent i = new Intent(MainMenu.this, Options_activity.class);
                 startActivity(i);
             }

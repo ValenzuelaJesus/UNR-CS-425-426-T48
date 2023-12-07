@@ -53,9 +53,8 @@ public class Search_activity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
-                Intent i = new Intent(Search_activity.this, MainActivity.class);
-                startActivity(i);
+                // Finish the current activity, which will navigate back to the previous activity
+                finish();
             }
         });
 

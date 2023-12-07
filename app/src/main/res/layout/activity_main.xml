@@ -30,14 +30,14 @@
                 android:background="@android:color/darker_gray"/>
     </FrameLayout>
 
-    <!-- Custom Banner View -->
+
     <RelativeLayout
             android:id="@+id/arbanner"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:background="@android:color/darker_gray">
 
-        <!-- "AR SCANNER" text adjusted towards the bottom -->
+
         <TextView
                 android:id="@+id/tvArScanner"
                 android:layout_width="wrap_content"
@@ -49,13 +49,13 @@
                 android:layout_marginBottom="16dp"
                 android:layout_centerInParent="true"/> <!-- Adjust margin as needed -->
 
-        <!-- "BACK" button on the top left -->
+
         <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnBack"
+                android:id="@+id/menuButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_color"
-                android:text="BACK"
+                android:text="Menu"
                 android:textColor="@android:color/white"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -103,7 +103,7 @@
                 android:layout_above="@+id/tvTipDescription"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"/>
-        <!-- Centered text at the bottom -->
+
     </RelativeLayout>
 
     <!-- White Square with hollowed-out center -->
