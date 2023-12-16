@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+// Camera preview was implemented with CameraX documentation as reference
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
                     ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                     bindPreview(cameraProvider);
                 } catch (ExecutionException | InterruptedException e) {
+                    // catch
 
-                    // This should not be reached.
                 }
             }, ContextCompat.getMainExecutor(this));
         }

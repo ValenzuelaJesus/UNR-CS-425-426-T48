@@ -47,7 +47,7 @@
                 android:textSize="32sp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="16dp"
-                android:layout_centerInParent="true"/> <!-- Adjust margin as needed -->
+                android:layout_centerInParent="true" android:fontFamily="sans-serif-black"/> <!-- Adjust margin as needed -->
 
 
         <androidx.appcompat.widget.AppCompatButton
