@@ -36,7 +36,6 @@ public class MainMenu extends AppCompatActivity {
 
     private ActivityResultLauncher<String[]> activityResultLauncher;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-
     // Camera-related constants
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
 

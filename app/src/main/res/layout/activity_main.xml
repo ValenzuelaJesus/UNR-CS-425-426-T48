@@ -134,6 +134,16 @@
                 android:layout_height="150sp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/hollowed_out_square"/>
+
+        <!-- testing for cords -->
+        <TextView
+                android:id="@+id/coordinatesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latitude: 0.0000\nLongitude: 0.0000"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:gravity="center" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
