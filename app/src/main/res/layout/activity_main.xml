@@ -144,6 +144,16 @@
                 android:textSize="16sp"
                 android:layout_centerInParent="true"
                 android:gravity="center" />
+        <TextView
+                android:id="@+id/azimuthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Azimuth: 0.0 degrees"
+                android:textSize="18sp"
+                android:textColor="#000000" android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"/>
+
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

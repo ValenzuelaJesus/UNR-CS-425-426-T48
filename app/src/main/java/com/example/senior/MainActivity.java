@@ -3,6 +3,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.android.gms.location.*;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -52,7 +57,98 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
     private ActivityMainBinding binding;
     private TextView coordinatesTextView;
+    private TextView azimuthTextView;
     LocationManager locationManager;
+    private SensorManager sensorManager;
+
+    private float[] accelerometerValues = new float[3];
+    private float[] magnetometerValues = new float[3];
+
+    private float previousAzimuth = 0.0f;
+
+    private static final float AZIMUTH_THRESHOLD = 5.0f;
+    private static final float ALPHA = 0.5f; // Adjust this value to control the amount of smoothing for Azimuth
+    private float smoothedAzimuth = 0;
+
+    private int consecutiveRecognitions = 0;
+    private static final int REQUIRED_CONSECUTIVE_RECOGNITIONS = 3; // for building recogonizition accuracy
+
+    private double latitude;
+    private double longitude;
+
+    private SensorEventListener sensorEventListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                accelerometerValues = event.values;
+            } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+                magnetometerValues = event.values;
+
+
+                // Calculate azimuth when both accelerometer and magnetometer values are available
+                if (accelerometerValues != null && magnetometerValues != null) {
+                    float[] rotationMatrix = new float[9];
+                    float[] orientationValues = new float[3];
+
+                    // Get the rotation matrix from the accelerometer and magnetometer values
+                    SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerValues, magnetometerValues);
+
+                    // Get the orientation values from the rotation matrix
+                    SensorManager.getOrientation(rotationMatrix, orientationValues);
+
+                    // finds raw azimuth
+                    float azimuth = (float) Math.toDegrees(orientationValues[0]);
+
+                    // Ensure azimuth is in the range
+                    azimuth = (azimuth + 360) % 360;
+
+                    // Apply a low-pass filter
+                    smoothedAzimuth = smoothedAzimuth + ALPHA * (azimuth - smoothedAzimuth);
+
+                    //Only changes the azimuth if a significant change happens
+                    if (Math.abs(smoothedAzimuth - previousAzimuth) < 2) {
+                        smoothedAzimuth = previousAzimuth;
+                    }
+                    // Update the UI
+                    updateAzimuth(smoothedAzimuth);
+
+                    // For demonstration purposes, William N Pennington building cords
+                    // Building detection occurs around Azimuth 310
+                    double destinationLatitude = 39.53994709346304;
+                    double destinationLongitude = -119.81204368554893;
+
+                    // Calculate bearing to the destination
+                    float bearing = calculateBuildingBearing(latitude, longitude, destinationLatitude, destinationLongitude);
+
+
+                    // Check if the building is found based on the azimuth and bearing
+                    if (Math.abs(smoothedAzimuth - bearing) < AZIMUTH_THRESHOLD) {
+                        // Increment the consecutive recognitions counter
+                        consecutiveRecognitions++;
+
+                        // Check if the required consecutive recognitions are met
+                        if (consecutiveRecognitions >= REQUIRED_CONSECUTIVE_RECOGNITIONS) {
+                            // Reset the counter
+                            consecutiveRecognitions = 0;
+
+                            // Building is found consistently, perform actions accordingly
+                            buildingFound();
+                        }
+                    } else {
+                        // Reset the consecutive recognitions counter if no match
+                        consecutiveRecognitions = 0;
+
+                    }
+                    previousAzimuth = smoothedAzimuth;
+                }
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            // Handle accuracy changes if needed
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +157,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         coordinatesTextView = findViewById(R.id.coordinatesTextView);
+        azimuthTextView = findViewById(R.id.azimuthTextView);
+
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
         //Location permissions
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
@@ -96,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         // Check and request permissions when needed
         checkAndRequestPermissions();
+        registerSensorListeners();
     }
     @SuppressLint("MissingPermission")
     private void getLocation(){
@@ -183,15 +285,78 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        Toast.makeText(this, ""+location.getLatitude()+","+location.getLongitude(), Toast.LENGTH_SHORT).show();
-
-
-    }
     private void updateCoordinatesTextView(double latitude, double longitude) {
         if (coordinatesTextView != null) {
             String coordinatesText = "Latitude: " + latitude + "\nLongitude: " + longitude;
             coordinatesTextView.setText(coordinatesText);
         }}
+    private void registerSensorListeners() {
+        // Register the accelerometer and magnetometer sensor listeners
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor magnetometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        if (accelerometerSensor != null && magnetometerSensor != null) {
+            sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            sensorManager.registerListener(sensorEventListener, magnetometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        } else {
+            // Handle the case where one or both sensors are not available
+            Toast.makeText(this, "Accelerometer or magnetometer not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void unregisterSensorListeners() {
+        // Unregister the sensor listeners to conserve resources
+        sensorManager.unregisterListener(sensorEventListener);
+    }
+
+    private void updateAzimuth(float azimuth) {
+        // Update the UI or perform any other actions with the azimuth
+        azimuthTextView.setText("Azimuth: " + azimuth + " degrees");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+
+            // Update the text view with location coordinates
+            updateCoordinatesTextView(latitude, longitude);
+
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Unregister sensors and location updates when the activity is paused
+        unregisterSensorListeners();
+    }
+
+    private float calculateBuildingBearing(double userLat, double userLon, double buildingLat, double buildingLon) {
+        Location userLocation = new Location("UserLocation");
+        userLocation.setLatitude(userLat);
+        userLocation.setLongitude(userLon);
+
+        Location buildingLocation = new Location("BuildingLocation");
+        buildingLocation.setLatitude(buildingLat);
+        buildingLocation.setLongitude(buildingLon);
+
+        // Calculate the bearing from the user's location to the building
+        float bearing = userLocation.bearingTo(buildingLocation);
+
+        // Adjust the bearing to be in the range [0, 360)
+        if (bearing < 0) {
+            bearing += 360;
+        }
+
+        return bearing;
+    }
+
+    private void buildingFound() {
+        // Building is found, perform actions accordingly
+
+        Toast.makeText(this, "Building found!", Toast.LENGTH_SHORT).show();
+    }
 }
