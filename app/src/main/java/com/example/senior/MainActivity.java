@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private float smoothedAzimuth = 0;
 
     private int consecutiveRecognitions = 0;
-    private static final int REQUIRED_CONSECUTIVE_RECOGNITIONS = 3; // for building recogonizition accuracy
+    private static final int REQUIRED_CONSECUTIVE_RECOGNITIONS = 5; // for building recognition accuracy
 
     private double latitude;
     private double longitude;
@@ -93,8 +93,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     // Get the rotation matrix from the accelerometer and magnetometer values
                     SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerValues, magnetometerValues);
 
-                    // Get the orientation values from the rotation matrix
-                    SensorManager.getOrientation(rotationMatrix, orientationValues);
+                    // only horizontal movement used
+                    float[] remappedRotationMatrix = new float[9];
+                    SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, remappedRotationMatrix);
+
+
+                    SensorManager.getOrientation(remappedRotationMatrix, orientationValues);
+
 
                     // finds raw azimuth
                     float azimuth = (float) Math.toDegrees(orientationValues[0]);
@@ -113,9 +118,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     updateAzimuth(smoothedAzimuth);
 
                     // For demonstration purposes, William N Pennington building cords
-                    // Building detection occurs around Azimuth 310
+
                     double destinationLatitude = 39.53994709346304;
                     double destinationLongitude = -119.81204368554893;
+
+
 
                     // Calculate bearing to the destination
                     float bearing = calculateBuildingBearing(latitude, longitude, destinationLatitude, destinationLongitude);
@@ -212,8 +219,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult != null && locationResult.getLastLocation() != null) {
                     Location location = locationResult.getLastLocation();
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
 
                     updateCoordinatesTextView(latitude,longitude);
                 }
