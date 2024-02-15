@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private float previousAzimuth = 0.0f;
 
-    private static final float AZIMUTH_THRESHOLD = 5.0f;
+    private static final float AZIMUTH_THRESHOLD = 10.0f;
     private static final float ALPHA = 0.5f; // Adjust this value to control the amount of smoothing for Azimuth
     private float smoothedAzimuth = 0;
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     smoothedAzimuth = smoothedAzimuth + ALPHA * (azimuth - smoothedAzimuth);
 
                     //Only changes the azimuth if a significant change happens
-                    if (Math.abs(smoothedAzimuth - previousAzimuth) < 2) {
+                    if (Math.abs(smoothedAzimuth - previousAzimuth) < 1) {
                         smoothedAzimuth = previousAzimuth;
                     }
                     // Update the UI
@@ -343,8 +343,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private float calculateBuildingBearing(double userLat, double userLon, double buildingLat, double buildingLon) {
         Location userLocation = new Location("UserLocation");
-        userLocation.setLatitude(userLat);
-        userLocation.setLongitude(userLon);
+        userLocation.setLatitude(latitude);
+        userLocation.setLongitude(longitude);
 
         Location buildingLocation = new Location("BuildingLocation");
         buildingLocation.setLatitude(buildingLat);
