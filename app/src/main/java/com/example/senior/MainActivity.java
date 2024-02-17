@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import com.example.senior.Building;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     // Camera-related constants
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
+
     private ActivityMainBinding binding;
     private TextView coordinatesTextView;
     private TextView azimuthTextView;
@@ -71,14 +75,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private float smoothedAzimuth = 0;
 
     private int consecutiveRecognitions = 0;
-    private static final int REQUIRED_CONSECUTIVE_RECOGNITIONS = 5; // for building recognition accuracy
+    private static final int REQUIRED_CONSECUTIVE_RECOGNITIONS = 3; // for building recognition accuracy
 
     private double latitude;
     private double longitude;
 
+    private Building[] closestBuildings = new Building[2];
+    private Building LastSuccessfulBuilding;
+
+
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+            if (latitude == 0){
+                return;
+            }
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 accelerometerValues = event.values;
             } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
@@ -111,39 +122,35 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     smoothedAzimuth = smoothedAzimuth + ALPHA * (azimuth - smoothedAzimuth);
 
                     //Only changes the azimuth if a significant change happens
-                    if (Math.abs(smoothedAzimuth - previousAzimuth) < 1) {
+                    if (Math.abs(smoothedAzimuth - previousAzimuth) < 2) {
                         smoothedAzimuth = previousAzimuth;
                     }
                     // Update the UI
                     updateAzimuth(smoothedAzimuth);
 
-                    // For demonstration purposes, William N Pennington building cords
 
-                    double destinationLatitude = 39.53994709346304;
-                    double destinationLongitude = -119.81204368554893;
-
-
-
+                    for (Building building : closestBuildings) {
                     // Calculate bearing to the destination
-                    float bearing = calculateBuildingBearing(latitude, longitude, destinationLatitude, destinationLongitude);
+                        float bearing = calculateBuildingBearing(latitude, longitude, building.getLatitude(), building.getLongitude());
 
 
                     // Check if the building is found based on the azimuth and bearing
-                    if (Math.abs(smoothedAzimuth - bearing) < AZIMUTH_THRESHOLD) {
-                        // Increment the consecutive recognitions counter
-                        consecutiveRecognitions++;
+                        if (Math.abs(smoothedAzimuth - bearing) < AZIMUTH_THRESHOLD) {
+                            LastSuccessfulBuilding = building;
+                            consecutiveRecognitions++;
 
-                        // Check if the required consecutive recognitions are met
-                        if (consecutiveRecognitions >= REQUIRED_CONSECUTIVE_RECOGNITIONS) {
-                            // Reset the counter
-                            consecutiveRecognitions = 0;
-
-                            // Building is found consistently, perform actions accordingly
-                            buildingFound();
+                            if (consecutiveRecognitions >= REQUIRED_CONSECUTIVE_RECOGNITIONS) {
+//                            // Reset the counter
+                                consecutiveRecognitions = 0;
+//
+//                            // Building is found consistently, perform actions accordingly
+                                buildingFound(building);}
                         }
-                    } else {
-                        // Reset the consecutive recognitions counter if no match
-                        consecutiveRecognitions = 0;
+                        else {
+                            if(building == LastSuccessfulBuilding){
+                                consecutiveRecognitions = 0;
+                            }
+                        }
 
                     }
                     previousAzimuth = smoothedAzimuth;
@@ -196,6 +203,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
         });
+        binding.MoreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
+                Intent i = new Intent(MainActivity.this,MainMenu.class);
+                startActivity(i);
+            }
+
+        });
+        binding.resetEnvironment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               UndoShowBottomButtons();
+            }
+
+        });
 
         // Initialize the ActivityResultLauncher for requesting permissions
         activityResultLauncher = registerForActivityResult(
@@ -230,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Request location updates
         FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
         client.requestLocationUpdates(locationRequest, locationCallback, null);
-
+        GetclosestBuildings();
 
     }
 
@@ -329,9 +352,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             // Update the text view with location coordinates
             updateCoordinatesTextView(latitude, longitude);
-
-
         }
+
+        GetclosestBuildings();
+
     }
 
     @Override
@@ -361,9 +385,45 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return bearing;
     }
 
-    private void buildingFound() {
+    private void buildingFound(Building building) {
         // Building is found, perform actions accordingly
+        Toast buildingtoast = Toast.makeText(this, building.getName(), Toast.LENGTH_SHORT);
+        buildingtoast.show();
+        ShowBottomButtons();
 
-        Toast.makeText(this, "Building found!", Toast.LENGTH_SHORT).show();
+
+
     }
+    private void ShowBottomButtons(){
+        TextView description = findViewById(R.id.tvTipDescription);
+        ImageView icon = findViewById(R.id.infoIcon);
+
+        description.setVisibility(View.GONE);
+        icon.setVisibility(View.GONE);
+
+        unregisterSensorListeners();
+        binding.resetEnvironment.setVisibility(View.VISIBLE);
+        binding.MoreInfo.setVisibility(View.VISIBLE);
+
+
+
+
+    }
+    private void UndoShowBottomButtons() {
+        TextView description = findViewById(R.id.tvTipDescription);
+        ImageView icon = findViewById(R.id.infoIcon);
+
+        description.setVisibility(View.VISIBLE);
+        icon.setVisibility(View.VISIBLE);
+
+        registerSensorListeners();
+        binding.resetEnvironment.setVisibility(View.INVISIBLE);
+        binding.MoreInfo.setVisibility(View.INVISIBLE);
+    }
+    private void GetclosestBuildings() {
+        closestBuildings[0] = new Building("William N. Pennington Building",39.53994709346304, -119.81204368554893);
+        closestBuildings[1] = new Building("Davidson Math and Science", 39.539065822167, -119.81230638240348);
+
+    }
+
 }
