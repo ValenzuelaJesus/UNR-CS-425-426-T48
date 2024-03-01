@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
                     for (Building building : closestBuildings) {
                     // Calculate bearing to the destination
-                        float bearing = calculateBuildingBearing(latitude, longitude, building.getLatitude(), building.getLongitude());
+                        float bearing = calculateBuildingBearing(building.getLatitude(), building.getLongitude());
 
 
                     // Check if the building is found based on the azimuth and bearing
@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         unregisterSensorListeners();
     }
 
-    private float calculateBuildingBearing(double userLat, double userLon, double buildingLat, double buildingLon) {
+    private float calculateBuildingBearing(double buildingLat, double buildingLon) {
         Location userLocation = new Location("UserLocation");
         userLocation.setLatitude(latitude);
         userLocation.setLongitude(longitude);
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Toast buildingtoast = Toast.makeText(this, building.getName(), Toast.LENGTH_SHORT);
         buildingtoast.show();
         ShowBottomButtons();
-
+        unregisterSensorListeners();
 
 
     }
@@ -401,7 +401,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         description.setVisibility(View.GONE);
         icon.setVisibility(View.GONE);
 
-        unregisterSensorListeners();
         binding.resetEnvironment.setVisibility(View.VISIBLE);
         binding.MoreInfo.setVisibility(View.VISIBLE);
 
