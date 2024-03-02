@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import android.content.Intent;
 
@@ -216,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View view) {
                UndoShowBottomButtons();
+               HidePopups();
             }
 
         });
@@ -391,6 +393,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         buildingtoast.show();
         ShowBottomButtons();
         unregisterSensorListeners();
+        ShowPopups();
 
 
     }
@@ -423,6 +426,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         closestBuildings[0] = new Building("William N. Pennington Building",39.53994709346304, -119.81204368554893);
         closestBuildings[1] = new Building("Davidson Math and Science", 39.539065822167, -119.81230638240348);
 
+    }
+
+    private void ShowPopups() {
+        binding.buildingInfoLayout.setVisibility(View.VISIBLE);
+        binding.buildingHoursLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void HidePopups() {
+        binding.buildingInfoLayout.setVisibility(View.INVISIBLE);
+        binding.buildingHoursLayout.setVisibility(View.INVISIBLE);
     }
 
 }

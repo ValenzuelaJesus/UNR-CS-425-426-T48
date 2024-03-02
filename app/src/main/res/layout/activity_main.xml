@@ -12,15 +12,79 @@
     <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="613dp"
+            android:layout_gravity="center"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- Camera Preview -->
         <androidx.camera.view.PreviewView
                 android:id="@+id/previewView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="639dp"
+                android:layout_gravity="center"
+                android:elevation="0dp">
         </androidx.camera.view.PreviewView>
+
+        <RelativeLayout
+                android:id="@+id/buildingInfoLayout"
+                android:layout_width="167dp"
+                android:layout_height="100dp"
+                android:layout_gravity="top|start"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="18dp"
+                android:visibility="invisible"
+                android:background="@drawable/button_color"
+                android:elevation="1dp"
+                android:padding="16dp">
+
+
+            <TextView
+                    android:id="@+id/buildingNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="William Pennington Engineering Building"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+            />
+
+            <TextView
+                    android:id="@+id/buildingCodeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Building Code: WPEB"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_below="@id/buildingNameTextView"
+            />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/buildingHoursLayout"
+                android:layout_width="108dp"
+                android:layout_height="151dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="18dp"
+                android:visibility="invisible"
+                android:background="@drawable/button_color"
+                android:elevation="1dp"
+                android:padding="16dp">
+
+            <TextView
+                    android:id="@+id/buildingHoursTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="Hours: M-F 6:30AM-8:00PM Sat/Sun: CLOSED"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+            />
+
+        </RelativeLayout>
 
         <!-- Banner View -->
         <View
@@ -120,8 +184,6 @@
                 android:background="@drawable/button_color"
                 android:text="CLEAR"
                 android:visibility="invisible"/>
-
-
 
 
     </RelativeLayout>
