@@ -39,6 +39,8 @@ public class Building {
         closestBuildings[2] = new Building("Palmer Engineering", "PE", 39.53952683899103, -119.81289435810741);
         closestBuildings[3] = new Building("Harry Reid Engineering Lab", "HREL",39.54052509682244, -119.81316407287733);
         return closestBuildings;
+
+        //as
     }
 }
 

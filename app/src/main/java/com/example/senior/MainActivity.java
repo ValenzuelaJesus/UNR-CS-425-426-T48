@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         buildingtoast.show();
         ShowBottomButtons();
         unregisterSensorListeners();
-        ShowPopups();
+        ShowPopups(building);
 
 
     }
@@ -433,15 +433,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setVisibility(View.INVISIBLE);
     }
     private void GetclosestBuildings() {
-        closestBuildings[0] = new Building("William N. Pennington Building",39.53994709346304, -119.81204368554893);
-        closestBuildings[1] = new Building("Davidson Math and Science", 39.539065822167, -119.81230638240348);
-
+        closestBuildings = new Building(null, null,0,0).getClosestBuildings();
     }
 
-    public void ShowPopups() {
-        binding.buildingInfoLayout.setVisibility(View.VISIBLE);
-        binding.buildingHoursLayout.setVisibility(View.VISIBLE);
-    }
+        private void ShowPopups(Building building) {
+            TextView name = findViewById(R.id.buildingNameTextView);
+            TextView code = findViewById(R.id.buildingCodeTextView);
+            name.setText(building.getName());
+            code.setText(building.getBuildingCode());
+            binding.buildingInfoLayout.setVisibility(View.VISIBLE);
+            binding.buildingHoursLayout.setVisibility(View.VISIBLE);
+
+        }
 
     private void HidePopups() {
         binding.buildingInfoLayout.setVisibility(View.INVISIBLE);

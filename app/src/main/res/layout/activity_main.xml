@@ -155,6 +155,8 @@
             android:background="@android:color/white"
             android:layout_gravity="bottom">
 
+
+
         <TextView
                 android:id="@+id/tvTipDescription"
                 android:layout_width="match_parent"
