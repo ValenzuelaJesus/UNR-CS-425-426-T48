@@ -11,10 +11,12 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import android.content.Intent;
 
@@ -34,12 +36,16 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivityMainBinding;
 
+import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.android.gms.location.*;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import com.example.senior.Building;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double latitude;
     private double longitude;
 
-    private Building[] closestBuildings = new Building[4];
+    private Building[] closestBuildings = new Building[2];
     private Building LastSuccessfulBuilding;
 
     private static final String PREFS_NAME = "MyPrefsFile";
@@ -397,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         buildingtoast.show();
         ShowBottomButtons();
         unregisterSensorListeners();
-        ShowPopups(building);
+        ShowPopups();
 
 
     }
@@ -427,27 +433,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setVisibility(View.INVISIBLE);
     }
     private void GetclosestBuildings() {
-        closestBuildings = new Building(null, null,0,0).getClosestBuildings();
+        closestBuildings[0] = new Building("William N. Pennington Building",39.53994709346304, -119.81204368554893);
+        closestBuildings[1] = new Building("Davidson Math and Science", 39.539065822167, -119.81230638240348);
 
     }
 
-    private void ShowPopups(Building building) {
-        TextView name = findViewById(R.id.buildingNameTextView);
-        TextView code = findViewById(R.id.buildingCodeTextView);
-        name.setText(building.getName());
-        code.setText(building.getBuildingCode());
+    public void ShowPopups() {
         binding.buildingInfoLayout.setVisibility(View.VISIBLE);
         binding.buildingHoursLayout.setVisibility(View.VISIBLE);
-
     }
 
     private void HidePopups() {
         binding.buildingInfoLayout.setVisibility(View.INVISIBLE);
         binding.buildingHoursLayout.setVisibility(View.INVISIBLE);
     }
+
     private void applyColorBlindMode(int colorBlindnessMode) {
         // Apply color blindness filter
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
-
 }
