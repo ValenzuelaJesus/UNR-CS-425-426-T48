@@ -1,6 +1,7 @@
 package com.example.senior;
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,12 +42,21 @@ public class MainMenu extends AppCompatActivity {
 
     private ActivityMainMenuBinding binding;
 
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+
+    private int colorBlindnessMode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         binding = ActivityMainMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        applyColorBlindMode(colorBlindnessMode);
 
 
         binding.ARbutton.setOnClickListener(new View.OnClickListener() {
@@ -73,5 +83,10 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
 
-    }}
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+        ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
+    }
+}

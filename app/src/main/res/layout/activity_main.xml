@@ -27,11 +27,13 @@
 
         <RelativeLayout
                 android:id="@+id/buildingInfoLayout"
+                android:alpha="0.75"
                 android:layout_width="167dp"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_gravity="top|start"
-                android:layout_marginTop="18dp"
-                android:layout_marginStart="18dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="50dp"
                 android:visibility="invisible"
                 android:background="@drawable/button_color"
                 android:elevation="1dp"
@@ -62,10 +64,11 @@
 
         <RelativeLayout
                 android:id="@+id/buildingHoursLayout"
+                android:alpha="0.75"
                 android:layout_width="108dp"
-                android:layout_height="151dp"
+                android:layout_height="140dp"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="18dp"
                 android:visibility="invisible"
                 android:background="@drawable/button_color"
@@ -99,9 +102,19 @@
     <RelativeLayout
             android:id="@+id/arbanner"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="120dp"
             android:background="@android:color/darker_gray">
-
+        <TextView
+                android:id="@+id/tvArScanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AR SCANNER"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="75dp"
+                android:fontFamily="sans-serif-black" android:layout_alignParentEnd="true"
+                android:layout_marginEnd="102dp"/>
 
         <!-- Adjust margin as needed -->
 
@@ -138,7 +151,7 @@
     <RelativeLayout
             android:id="@+id/whiteBanner"
             android:layout_width="match_parent"
-            android:layout_height="101dp"
+            android:layout_height="90dp"
             android:background="@android:color/white"
             android:layout_gravity="bottom">
 
@@ -189,16 +202,7 @@
     </RelativeLayout>
 
     <!-- White Square with hollowed-out center -->
-    <TextView
-            android:id="@+id/tvArScanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AR SCANNER"
-            android:textColor="@android:color/black"
-            android:textSize="32sp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-black" app:layout_anchorGravity="center"
-            app:layout_anchor="@+id/arbanner"/>
+
     <RelativeLayout
             android:id="@+id/whiteSquare"
             android:layout_width="match_parent"

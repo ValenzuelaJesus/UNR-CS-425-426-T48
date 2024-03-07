@@ -1,6 +1,7 @@
 package com.example.senior;
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+import android.widget.Button;
 
 import android.content.Intent;
 import android.graphics.ColorMatrixColorFilter;
@@ -47,12 +49,22 @@ public class Options_activity extends AppCompatActivity {
 
     private ActivityOptionsBinding binding;
 
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+    private int colorBlindnessMode = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         binding = ActivityOptionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Restore the selected color blindness mode from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        applyColorBlindMode(colorBlindnessMode);
 
 
         binding.exitbutton.setOnClickListener(new View.OnClickListener() {
@@ -64,4 +76,49 @@ public class Options_activity extends AppCompatActivity {
             }
         });
 
-    }}
+        binding.colorblindbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Toggle color blindness mode
+                toggleColorBlindMode();
+
+                // Update SharedPreferences with the new color blindness mode
+                SharedPreferences preferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("colorBlindnessMode", colorBlindnessMode);
+                editor.apply();
+
+                // Apply the color blindness mode immediately after updating SharedPreferences
+                applyColorBlindMode(colorBlindnessMode);
+            }
+        });
+
+        binding.resetoptionsbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorBlindnessMode = 0;
+
+                // Update SharedPreferences with the new color blindness mode
+                SharedPreferences preferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("colorBlindnessMode", colorBlindnessMode);
+                editor.apply();
+
+                // Apply the color blindness mode immediately after updating SharedPreferences
+                applyColorBlindMode(colorBlindnessMode);
+            }
+        });
+
+
+
+    }
+    private void toggleColorBlindMode() {
+        // Cycle through the different types of color blindness
+        colorBlindnessMode = (colorBlindnessMode + 1) % 4;
+    }
+
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+        ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
+    }
+}

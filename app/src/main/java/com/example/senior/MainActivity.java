@@ -2,6 +2,7 @@ package com.example.senior;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,12 +11,10 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.RelativeLayout;
 
 import android.content.Intent;
 
@@ -35,16 +34,12 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivityMainBinding;
 
-import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.android.gms.location.*;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
-import com.example.senior.Building;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -81,8 +76,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double latitude;
     private double longitude;
 
-    private Building[] closestBuildings = new Building[2];
+    private Building[] closestBuildings = new Building[4];
     private Building LastSuccessfulBuilding;
+
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+
+    private int colorBlindnessMode = 0;
 
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -176,6 +176,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        applyColorBlindMode(colorBlindnessMode);
 
         //Location permissions
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -423,8 +427,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setVisibility(View.INVISIBLE);
     }
     private void GetclosestBuildings() {
-        closestBuildings[0] = new Building("William N. Pennington Building","WPEB",39.53994709346304, -119.81204368554893);
-        closestBuildings[1] = new Building("Davidson Math and Science","DMSC", 39.539065822167, -119.81230638240348);
+        closestBuildings = new Building(null, null,0,0).getClosestBuildings();
 
     }
 
@@ -441,6 +444,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void HidePopups() {
         binding.buildingInfoLayout.setVisibility(View.INVISIBLE);
         binding.buildingHoursLayout.setVisibility(View.INVISIBLE);
+    }
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+        ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
 
 }
