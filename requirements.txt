@@ -22,5 +22,4 @@ trio-websocket==0.11.1
 typing_extensions==4.10.0
 tzdata==2023.3
 urllib3==2.2.1
-vboxapi==1.0
-wsproto==1.2.0
+
