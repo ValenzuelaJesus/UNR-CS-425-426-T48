@@ -45,6 +45,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import android.speech.tts.TextToSpeech;
+
 import com.example.senior.Building;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -89,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
 
     private int colorBlindnessMode = 0;
+
+    private TextToSpeech textToSpeech;
+
 
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -186,6 +191,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
         applyColorBlindMode(colorBlindnessMode);
+
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    // TTS engine initialized successfully
+                } else {
+                    // TTS engine initialization failed
+                    Toast.makeText(MainActivity.this, "Text-to-speech initialization failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //Location permissions
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -399,8 +416,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private void buildingFound(Building building) {
         // Building is found, perform actions accordingly
-        Toast buildingtoast = Toast.makeText(this, building.getName(), Toast.LENGTH_SHORT);
-        buildingtoast.show();
+        speak(building.getName());
         ShowBottomButtons();
         unregisterSensorListeners();
         ShowPopups(building);
@@ -454,5 +470,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void applyColorBlindMode(int colorBlindnessMode) {
         // Apply color blindness filter
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
+    }
+    private void speak(String text) {
+        if (textToSpeech != null) {
+            // Speak the text
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
     }
 }
