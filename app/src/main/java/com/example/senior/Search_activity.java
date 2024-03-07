@@ -1,6 +1,7 @@
 package com.example.senior;
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +43,11 @@ public class Search_activity extends AppCompatActivity {
 
     private ActivitySearchBinding binding;
 
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+
+    private int colorBlindnessMode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,9 @@ public class Search_activity extends AppCompatActivity {
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        applyColorBlindMode(colorBlindnessMode);
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,4 +67,9 @@ public class Search_activity extends AppCompatActivity {
             }
         });
 
-    }}
+    }
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+        ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
+    }
+}

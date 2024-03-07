@@ -2,6 +2,7 @@ package com.example.senior;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -83,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private Building[] closestBuildings = new Building[2];
     private Building LastSuccessfulBuilding;
+
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+
+    private int colorBlindnessMode = 0;
 
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -176,6 +182,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        applyColorBlindMode(colorBlindnessMode);
 
         //Location permissions
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -428,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
-    private void ShowPopups() {
+    public void ShowPopups() {
         binding.buildingInfoLayout.setVisibility(View.VISIBLE);
         binding.buildingHoursLayout.setVisibility(View.VISIBLE);
     }
@@ -438,4 +448,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.buildingHoursLayout.setVisibility(View.INVISIBLE);
     }
 
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+        ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
+    }
 }
