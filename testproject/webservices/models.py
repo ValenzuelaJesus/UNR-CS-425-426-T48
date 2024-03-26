@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.gis.db import models
 
 # Create your models here.
 class Building(models.Model):
-    gps_coords = models.PointField()
+    gps_coords = models.PointField(blank = True, null = True, srid=4326)
     building_code = models.CharField(max_length=10, unique=True)
     building_name = models.CharField(max_length=255)
     building_num = models.CharField(max_length=10)

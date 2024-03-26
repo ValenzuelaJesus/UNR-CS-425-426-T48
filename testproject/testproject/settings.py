@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['34.41.18.211']
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webservices', #Adding webservices application to installed
-    'rest_framework', #Added rest APi
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'testproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.postgresql',
+        'ENGINE' : 'django.contrib.gis.db.backends.postgis',
         'NAME': 'cs_426_database',
         'USER': 'webser',
         'PASSWORD': 'team48aru',
