@@ -4,66 +4,99 @@ from rest_framework import generics
 from .serializers import *
 
 # Create your views here.
-class BuildingList(generics.ListCreateAPIView): #Returns a list of all buildings
-    queryset = Building.objects.all()
-    serializer_class = BuildingSerializer
+class buildingList(generics.ListAPIView): #Returns a list of all buildings
+    queryset = building.objects.all()
+    serializer_class = buildingSerializer
+    print(queryset)
 
-class BuildingDetail(generics.RetrieveUpdateDestroyAPIView): #Returns a single Building Object by primary key
-    queryset = Building.objects.all()
-    serializer_class = BuildingSerializer
+class buildingDetail(generics.RetrieveUpdateDestroyAPIView): #Returns a single Building Object by primary key
+    queryset = building.objects.all()
+    serializer_class = buildingSerializer
 
-class LibraryList(generics.ListCreateAPIView): 
-    queryset = Library.objects.all()
-    serializer_class = LibrarySerializer
+class libraryList(generics.ListAPIView): 
+    queryset = library.objects.all()
+    serializer_class = librarySerializer
 
-class LibraryDetail(generics.RetrieveUpdateDestroyAPIView): 
-    queryset = Library.objects.all()
-    serializer_class = LibrarySerializer
+class libraryDetail(generics.RetrieveUpdateDestroyAPIView): 
+    queryset = library.objects.all()
+    serializer_class = librarySerializer
 
-class HangoutSpotList(generics.ListCreateAPIView): 
-    queryset = HangoutSpot.objects.all()
-    serializer_class = HangoutSpotSerializer
+class hangoutspotsList(generics.ListAPIView): 
+    queryset = hangoutspots.objects.all()
+    serializer_class = hangoutspotsSerializer
 
-class HangoutSpotDetail(generics.RetrieveUpdateDestroyAPIView): 
-    queryset = HangoutSpot.objects.all()
-    serializer_class = HangoutSpotSerializer
+class hangoutspotsDetail(generics.RetrieveUpdateDestroyAPIView): 
+    queryset = hangoutspots.objects.all()
+    serializer_class = hangoutspotsSerializer
 
-class RestroomList(generics.ListCreateAPIView):
-    queryset = Restroom.objects.all()
-    serializer_class = RestroomSerializer
+class restroomList(generics.ListAPIView):
+    queryset = restroom.objects.all()
+    serializer_class = restroomSerializer
 
-class RestroomDetail(generics.RetrieveUpdateDestroyAPIView): 
-    queryset = Restroom.objects.all()
-    serializer_class = RestroomSerializer
+class restroomDetail(generics.RetrieveUpdateDestroyAPIView): 
+    queryset = restroom.objects.all()
+    serializer_class = restroomSerializer
 
-class VendingMachineList(generics.ListCreateAPIView): 
-    queryset = VendingMachine.objects.all()
-    serializer_class = VendingMachineSerializer
+class vendingmachineList(generics.ListAPIView): 
+    queryset = vendingmachine.objects.all()
+    serializer_class = vendingmachineSerializer
 
-class VendingMachineDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = VendingMachine.objects.all()
-    serializer_class = VendingMachineSerializer
+class vendingmachineDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = vendingmachine.objects.all()
+    serializer_class = vendingmachineSerializer
 
-class ResourceList(generics.ListCreateAPIView): 
-    queryset = Resource.objects.all()
-    serializer_class = ResourceSerializer
+class resourceList(generics.ListAPIView): 
+    queryset = resource.objects.all()
+    serializer_class = resourceSerializer
 
-class ResourceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Resource.objects.all()
-    serializer_class = ResourceSerializer
+class resourceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = resource.objects.all()
+    serializer_class = resourceSerializer
 
-class StoreList(generics.ListCreateAPIView): 
-    queryset = Resource.objects.all()
-    serializer_class = StoreSerializer
+class storeList(generics.ListAPIView): 
+    queryset = store.objects.all()
+    serializer_class = storeSerializer
 
-class StoreDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Store.objects.all()
-    serializer_class = StoreSerializer
+class storeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = store.objects.all()
+    serializer_class = storeSerializer
 
-class Dining_OptionList(generics.ListCreateAPIView): 
-    queryset = Dining_Option.objects.all()
-    serializer_class = Dining_OptionSerializer
+class dining_optionList(generics.ListAPIView): 
+    queryset = dining_option.objects.all()
+    serializer_class = dining_optionSerializer
 
-class Dining_OptionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Dining_Option.objects.all()
-    serializer_class = Dining_OptionSerializer
+class dining_optionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = dining_option.objects.all()
+    serializer_class = dining_optionSerializer
+
+class labList(generics.ListAPIView):
+    queryset = lab.objects.all()
+    serializer_class = labSerializer
+
+class labDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = lab.objects.all()
+    serializer_class = labSerializer
+
+class elevatorList(generics.ListAPIView):
+    queryset = elevator.objects.all()
+    serializer_class = elevatorSerializer
+
+class elevatorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = elevator.objects.all()
+    serializer_class = elevatorSerializer
+
+class staircaseList(generics.ListAPIView):
+    queryset = staircase.objects.all()
+    serializer_class = staircaseSerializer
+
+class staircaseDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = staircase.objects.all()
+    serializer_class = staircaseSerializer
+
+class special_featureList(generics.ListAPIView):
+    queryset = special_feature.objects.all()
+    serializer_class = special_featureSerializer
+
+class special_featureDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = special_feature.objects.all()
+    serializer_class = special_featureSerializer

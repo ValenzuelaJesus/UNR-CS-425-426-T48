@@ -1,43 +1,62 @@
 from rest_framework import serializers
-from .models import Building, Library, HangoutSpot, Restroom, VendingMachine, Resource, Store, Dining_Option
+from .models import building, library, hangoutspots, restroom, vendingmachine, resource, store, dining_option, lab, elevator, staircase, special_feature
 
-class BuildingSerializer(serializers.ModelSerializer):
+class buildingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Building
+        model = building
         fields = '__all__'
 
-class LibrarySerializer(serializers.ModelSerializer):
+class librarySerializer(serializers.ModelSerializer):  
     class Meta:
-        model = Library
+        model = library
         fields = '__all__'
 
-class HangoutSpotSerializer(serializers.ModelSerializer):
+class hangoutspotsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = HangoutSpot
+        model = hangoutspots
         fields = '__all__'
 
-class RestroomSerializer(serializers.ModelSerializer):
+class restroomSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Restroom
+        model = restroom
         fields = '__all__'
 
-class VendingMachineSerializer(serializers.ModelSerializer):
+class vendingmachineSerializer(serializers.ModelSerializer):
     class Meta:
-        model = VendingMachine
+        model = vendingmachine
         fields = '__all__'
 
-class ResourceSerializer(serializers.ModelSerializer):
+class resourceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Resource
+        model = resource
         fields = '__all__'
 
-class StoreSerializer(serializers.ModelSerializer):
+class storeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Store
+        model = store
         fields = '__all__'
 
-class Dining_OptionSerializer(serializers.ModelSerializer):
+class dining_optionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Dining_Option
+        model = dining_option
         fields = '__all__'
 
+class labSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = lab
+        fields = '__all__'
+
+class elevatorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = elevator
+        fields = '__all__'
+
+class staircaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = staircase
+        fields = '__all__'
+
+class special_featureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = special_feature
+        fields = '__all__'
