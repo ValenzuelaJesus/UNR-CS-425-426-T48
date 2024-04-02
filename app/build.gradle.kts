@@ -54,6 +54,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("org.postgresql:postgresql:42.7.2")
+    implementation ("com.google.code.gson:gson:2.8.8")
 
 
 }
