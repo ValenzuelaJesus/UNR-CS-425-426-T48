@@ -13,10 +13,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.RelativeLayout;
+import android.widget.*;
 
 import android.content.Intent;
 
@@ -40,6 +37,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.android.gms.location.*;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +50,8 @@ import com.example.senior.Building;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
 
 // Camera preview was implemented with CameraX documentation as reference
@@ -93,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private int colorBlindnessMode = 0;
 
     private TextToSpeech textToSpeech;
+    private static final String PREFS_NAME_NOTES = "UserNotesPrefs";
+    private static final String USER_NOTES_KEY = "userNotes";
+
+    private ArrayList<UserNotes> userNotesList = new ArrayList<>();
+    private ArrayList<UserNotes> FiltereduserNotesList = new ArrayList<>();
+    private ArrayAdapter<UserNotes> adapter;
 
 
 
@@ -191,6 +198,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
         applyColorBlindMode(colorBlindnessMode);
+
+        ListView listViewNotes = findViewById(R.id.notesListView);
+        adapter = new ArrayAdapter<>(this, R.layout.popup_note_list, FiltereduserNotesList);
+        listViewNotes.setAdapter(adapter);
+
+
 
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -455,14 +468,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         private void ShowPopups(Building building) {
             TextView name = findViewById(R.id.buildingNameTextView);
             TextView code = findViewById(R.id.buildingCodeTextView);
+
             name.setText(building.getName());
             code.setText(building.getBuildingCode());
             binding.buildingInfoLayout.setVisibility(View.VISIBLE);
             binding.buildingHoursLayout.setVisibility(View.VISIBLE);
+            retrieveUserNotes(building);
+            if(!(FiltereduserNotesList.isEmpty())){
+                binding.notesLayout.setVisibility(View.VISIBLE);}
+
+
 
         }
 
     private void HidePopups() {
+        binding.notesLayout.setVisibility(View.INVISIBLE);
         binding.buildingInfoLayout.setVisibility(View.INVISIBLE);
         binding.buildingHoursLayout.setVisibility(View.INVISIBLE);
     }
@@ -475,6 +495,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (textToSpeech != null) {
             // Speak the text
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+    }
+    private void retrieveUserNotes(Building building) {
+        SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME_NOTES, Context.MODE_PRIVATE);
+        String userNotesJson = prefs.getString(USER_NOTES_KEY, null);
+        if (userNotesJson != null) {
+            Type listType = new TypeToken<ArrayList<UserNotes>>(){}.getType();
+            userNotesList.clear();
+            userNotesList.addAll(new Gson().fromJson(userNotesJson, listType));
+            adapter.notifyDataSetChanged();
+        }
+        FiltereduserNotesList.clear();
+        for (UserNotes note : userNotesList) {
+            if (note.getBuildingName().equals(building.getName())) {
+                FiltereduserNotesList.add(note);
+            }
         }
     }
 }

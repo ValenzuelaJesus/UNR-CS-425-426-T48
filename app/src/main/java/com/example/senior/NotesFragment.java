@@ -54,7 +54,7 @@ public class NotesFragment extends Fragment {
         listViewNotes.setAdapter(adapter);
 
         //array of building names
-        String[] buildingNames = {"Select A Building", "William N. Pennington", "Davidson Math and Science"};
+        String[] buildingNames = {"Select A Building", "William N. Pennington", "Davidson Math and Science","Palmer Engineering", "Harry Reid Engineering Lab"};
 
 
         ArrayAdapter<String> buildingAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, buildingNames);
