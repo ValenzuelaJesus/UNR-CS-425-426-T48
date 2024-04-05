@@ -28,6 +28,9 @@ import androidx.camera.core.Camera;
 import androidx.camera.view.PreviewView;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivityOptionsBinding;
 
@@ -106,6 +109,28 @@ public class Options_activity extends AppCompatActivity {
 
                 // Apply the color blindness mode immediately after updating SharedPreferences
                 applyColorBlindMode(colorBlindnessMode);
+            }
+        });
+
+        binding.myIntructors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // if button clicked, go to the notes fragment
+                Fragment notesFragment = new NotesFragment();
+
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+
+                transaction.replace(android.R.id.content, notesFragment);
+
+
+                transaction.commit();
+
             }
         });
 
