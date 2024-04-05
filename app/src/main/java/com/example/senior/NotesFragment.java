@@ -37,6 +37,10 @@ public class NotesFragment extends Fragment {
 
     private static final String PREFS_NAME = "UserNotesPrefs";
     private static final String USER_NOTES_KEY = "userNotes";
+    private static final String PREFS_NAME_COLOR = "MyPrefsFile";
+    private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
+
+    private int colorBlindnessMode = 0;
 
     private ArrayList<UserNotes> userNotesList = new ArrayList<>();
     private ArrayAdapter<UserNotes> adapter;
@@ -53,6 +57,12 @@ public class NotesFragment extends Fragment {
         adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item_note, userNotesList);
         listViewNotes.setAdapter(adapter);
 
+        SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME_COLOR, Context.MODE_PRIVATE);
+        colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
+        ColorBlind.applyColorBlindMode(listViewNotes, colorBlindnessMode);
+
+
+
         //array of building names
         String[] buildingNames = {"Select A Building","Ansari Business", "Chemistry Building", "Davidson Math and Science", "Harry Reid Engineering Lab", "Leifson Physics", "Palmer Engineering", "Schulich Lecture Hall", "William N. Pennington"};
 
@@ -68,6 +78,7 @@ public class NotesFragment extends Fragment {
 
 
         Button addButton = view.findViewById(R.id.addButton);
+        ColorBlind.applyColorBlindMode(addButton, colorBlindnessMode);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +89,7 @@ public class NotesFragment extends Fragment {
         });
 
         Button backButton = view.findViewById(R.id.backButton);
+        ColorBlind.applyColorBlindMode(backButton, colorBlindnessMode);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +174,11 @@ public class NotesFragment extends Fragment {
             userNotesList.addAll(new Gson().fromJson(userNotesJson, listType));
             adapter.notifyDataSetChanged();
         }
+    }
+    private void applyColorBlindMode(int colorBlindnessMode) {
+        // Apply color blindness filter
+
+        ColorBlind.applyColorBlindMode(requireView(), colorBlindnessMode);
     }
 
 }
