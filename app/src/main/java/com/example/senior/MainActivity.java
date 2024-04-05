@@ -1,7 +1,9 @@
 package com.example.senior;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -11,47 +13,30 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.RelativeLayout;
-
-import android.content.Intent;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import androidx.camera.core.Camera;
-import androidx.camera.view.PreviewView;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-
 import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivityMainBinding;
-
-import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.android.gms.location.*;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
-import android.speech.tts.TextToSpeech;
-
-import com.example.senior.Building;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import org.jetbrains.annotations.NotNull;
 
 // Camera preview was implemented with CameraX documentation as reference
 
@@ -235,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View view) {
                 // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
-                Intent i = new Intent(MainActivity.this,MainMenu.class);
+                Intent i = new Intent(MainActivity.this,MoreInfo.class);
                 startActivity(i);
             }
 

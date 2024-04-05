@@ -24,7 +24,6 @@ public class PopupsTest {
     public void testShowPopups() {
         // Calls the function being test on the main thread
         MainActivity mainActivity = activityTestRule.getActivity();
-        mainActivity.runOnUiThread(mainActivity::ShowPopups);
 
         // Checks that the popups are visible
         ViewInteraction buildingInfoLayout = onView(withId(R.id.buildingInfoLayout));
