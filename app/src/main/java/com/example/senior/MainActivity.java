@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double latitude;
     private double longitude;
 
-    private Building[] closestBuildings = new Building[2];
+    private Building[] closestBuildings = new Building[4];
+    private Building [] AllBuildings = new Building[99];
     private Building LastSuccessfulBuilding;
 
     private static final String PREFS_NAME = "MyPrefsFile";
@@ -204,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         listViewNotes.setAdapter(adapter);
 
 
+        AllBuildings = new Building(null, null,0,0).AddAllBuildings();
 
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -288,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     longitude = location.getLongitude();
 
                     updateCoordinatesTextView(latitude,longitude);
+                    GetclosestBuildings();
                 }
             }
         };
@@ -295,8 +298,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Request location updates
         FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
         client.requestLocationUpdates(locationRequest, locationCallback, null);
-        GetclosestBuildings();
-
     }
 
     private void checkAndRequestPermissions() {
@@ -397,7 +398,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
 
         GetclosestBuildings();
-
     }
 
     @Override
@@ -462,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setVisibility(View.INVISIBLE);
     }
     private void GetclosestBuildings() {
-        closestBuildings = new Building(null, null,0,0).getClosestBuildings();
+        closestBuildings = new Building(null, null,0,0).getClosestBuildings(latitude, longitude, AllBuildings);
     }
 
         private void ShowPopups(Building building) {
