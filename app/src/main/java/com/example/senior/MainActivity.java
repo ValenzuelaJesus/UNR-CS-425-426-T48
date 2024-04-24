@@ -34,11 +34,29 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.MalformedURLException;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import android.app.ProgressDialog;
+import android.os.Handler;
+import android.os.Looper;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import android.util.Log;
+
 
 // Camera preview was implemented with CameraX documentation as reference
 
@@ -46,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private ActivityResultLauncher<String[]> activityResultLauncher;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+
+    //Webservice Constants
+    private ProgressDialog pd;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     // Camera-related constants
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
@@ -191,8 +214,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         listViewNotes.setAdapter(adapter);
 
 
-        AllBuildings = new Building(null, null,0,0).AddAllBuildings();
+        //AllBuildings = new Building(null, null,0,0).AddAllBuildings();
 
+        // Webservice
+        //Log.d("WebServiceResult", "String Returned: " +  connectToWebService("http://34.41.18.211/webservices/Building/"));
+        String jsonBuildingData = connectToWebService("http://34.41.18.211/webservices/Building/");
+        AllBuildings = Building.createBuildingsFromJson(jsonBuildingData);
+        //connectToWebService("http://34.41.18.211/webservices/dining_option/");
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -448,8 +476,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setVisibility(View.INVISIBLE);
     }
     private void GetclosestBuildings() {
-        closestBuildings = new Building(null, null,0,0).getClosestBuildings(latitude, longitude, AllBuildings);
+        // Assuming 'AllBuildings' is already populated with Building objects
+        if (AllBuildings.length > 0) {
+            closestBuildings = AllBuildings[0].getClosestBuildings(latitude, longitude, AllBuildings);
+        }
     }
+
 
         private void ShowPopups(Building building) {
             TextView name = findViewById(R.id.buildingNameTextView);
@@ -499,4 +531,63 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         }
     }
+    //Webservices Code
+    public String connectToWebService(String urlString) {
+        final ProgressDialog pd = new ProgressDialog(MainActivity.this);
+        pd.setMessage("Please wait");
+        pd.setCancelable(false);
+        pd.show();
+
+        Future<String> future = executorService.submit(() -> {
+            String result = null;
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(urlString);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuilder buffer = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line).append("\n");
+                }
+
+                result = buffer.toString();
+            } catch (MalformedURLException e) {
+                Log.e("WebServiceError", "Malformed URL Exception: " + e.getMessage(), e);
+            } catch (IOException e) {
+                Log.e("WebServiceError", "IO Exception: " + e.getMessage(), e);
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return result;
+        });
+
+        try {
+            // Get the result from the future. This will block until the callable has completed.
+            String result = future.get();
+            pd.dismiss();
+            return result;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
+
