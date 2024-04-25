@@ -116,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private static SharedPreferences Devpreferences;
 
+    private static final String PREF_NAME_MUTE = "Mute_options_pref";
+    private static final String KEY_MUTE_OPTIONS = "Mute_options";
+    private static SharedPreferences Mutepreferences;
+
 
 
 
@@ -221,6 +225,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
        Devpreferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
        CheckDevView();
+
+       Mutepreferences = getSharedPreferences(PREF_NAME_MUTE, Context.MODE_PRIVATE);
+
 
 
         //AllBuildings = new Building(null, null,0,0).AddAllBuildings();
@@ -519,7 +526,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
     private void speak(String text) {
-        if (textToSpeech != null) {
+
+        if (textToSpeech != null &&  Mutepreferences.getBoolean(KEY_MUTE_OPTIONS, false) != false) {
             // Speak the text
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }

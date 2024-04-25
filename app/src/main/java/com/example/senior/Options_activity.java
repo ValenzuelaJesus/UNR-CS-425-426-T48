@@ -63,6 +63,13 @@ public class Options_activity extends AppCompatActivity {
     private boolean developerOptionsEnabled;
 
 
+    private static final String PREF_NAME_MUTE = "Mute_options_pref";
+    private static final String KEY_MUTE_OPTIONS = "Mute_options";
+
+    private static SharedPreferences Mutepreferences;
+    private boolean MuteEnabled;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +83,9 @@ public class Options_activity extends AppCompatActivity {
         applyColorBlindMode(colorBlindnessMode);
 
         preferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
-        updateButton();
+        Mutepreferences = getSharedPreferences(PREF_NAME_MUTE, Context.MODE_PRIVATE);
+        updateDevButton();
+        updateMuteButton();
 
         binding.exitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +134,15 @@ public class Options_activity extends AppCompatActivity {
             public void onClick(View view) {
                 developerOptionsEnabled = !developerOptionsEnabled;
                 setDeveloperOptionsEnabled(developerOptionsEnabled);
-                updateButton();
+                updateDevButton();
+            }
+        });
+        binding.TextToSpeech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MuteEnabled = !MuteEnabled;
+                setMuteEnabled(MuteEnabled);
+                updateMuteButton();
             }
         });
 
@@ -174,14 +191,31 @@ public class Options_activity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void updateButton() {
+    private void updateDevButton() {
         Button toggleButton = findViewById(R.id.devoptions);
         if (isDeveloperOptionsEnabled()) {
-            toggleButton.setText("DEV OPTIONS Enabled");
+            toggleButton.setText("DEV OPTIONS ON");
         } else {
-            toggleButton.setText("DEV OPTIONS Disabled");
+            toggleButton.setText("DEV OPTIONS OFF");
 
         }
+    }
+    private void updateMuteButton() {
+        Button toggleButton = findViewById(R.id.TextToSpeech);
+        if (isMuteEnabled()) {
+            toggleButton.setText("TEXT-TO-SPEECH ON");
+        } else {
+            toggleButton.setText("TEXT-TO-SPEECH OFF");
+
+        }
+    }
+    private void setMuteEnabled(boolean enabled) {
+        SharedPreferences.Editor editor = Mutepreferences.edit();
+        editor.putBoolean(KEY_MUTE_OPTIONS, enabled);
+        editor.apply();
+    }
+    private boolean isMuteEnabled() {
+        return Mutepreferences.getBoolean(KEY_MUTE_OPTIONS, false);
     }
 }
 

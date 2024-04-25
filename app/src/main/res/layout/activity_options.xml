@@ -47,6 +47,16 @@
                 android:layout_marginStart="115dp" android:layout_marginEnd="111dp"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="354dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:text="Text-To-Speech"
+                android:background="@drawable/button_color"
+                android:textColor="@android:color/white"
+                android:layout_width="185dp"
+                android:layout_height="58dp" android:id="@+id/TextToSpeech"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="115dp" android:layout_marginEnd="111dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="426dp"/>
         <ImageView
                 android:src="@drawable/unr_wolf_logo"
                 android:layout_width="wrap_content"
