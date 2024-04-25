@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import android.content.Intent;
@@ -59,11 +61,129 @@ public class Search_activity extends AppCompatActivity {
         colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
         applyColorBlindMode(colorBlindnessMode);
 
+
+        String[] buildingNames = {"Select A Building",
+                "Agricultural Education Health Building",
+                "Anderson Health Science",
+                "Ansari Business",
+                "Applied Research Facility",
+                "Artemisia Building",
+                "BCN Purchasing",
+                "Building 058",
+                "Canada Hall",
+                "Central Services",
+                "Center for Molecular Medicine",
+                "Chemisty Building",
+                "Child Care Facility",
+                "Church Fine Arts",
+                "Clark Administration",
+                "Claude Howard System Administration (NSHE)",
+                "Computer Center",
+                "Dining Conference Center",
+                "Earthquake Engineering Laboratory",
+                "Edna S. Brigham Clinical Education Building",
+                "Environmental Research Facility",
+                "Facilities Services",
+                "Fitzgerald Student Services Building",
+                "Fleischmann Agriculture",
+                "Fleischmann Planetarium",
+                "Frandsen Humanities",
+                "Gateway Parking Complex",
+                "Great Basin Hall",
+                "Harry Reid Engineering Laboratory",
+                "Holman Arts & Media Center",
+                "Howard Medical Sciences",
+                "Innevation Center",
+                "Joe Crowley Student Union",
+                "Jones Center",
+                "Jot Travis Building",
+                "Juniper Hall",
+                "Knudtsen Resource Center",
+                "Lawlor Events Center",
+                "Leifson Physics",
+                "Life Science",
+                "Lincoln Hall",
+                "Lombardi Recreation Center",
+                "Mackay Mines",
+                "Mackay Science",
+                "Mackay Stadium",
+                "Manville Health Science",
+                "Manzanita Hall",
+                "Mathewson-IGT Knowledge Center",
+                "National Judicial College Building",
+                "Nell J. Redfield (Student Health Center)",
+                "Nell J. Redfield Building A, Redfield Campus",
+                "Nellor Biomedical Sciences",
+                "Nevada Living Learning Community",
+                "Nevada State Health Laboratory",
+                "Nye Hall",
+                "Orvis Building",
+                "Palmer Engineering",
+                "Parking Services",
+                "Patterson Hall",
+                "Paul Laxalt Mineral Engineering",
+                "Paul Laxalt Mineral Research",
+                "Peavine Hall",
+                "William N. Pennington Engineering Building",
+                "William N. Pennington Health Sciences Building",
+                "William N. Pennington Medical Education",
+                "William N. Pennington Student Achievement Center",
+                "Marguerite W. Petersen Athletic Academic Center",
+                "Ponderosa Village",
+                "Prim Library",
+                "Prim-Schultz Hall",
+                "Real Estate Office",
+                "Renewable Resource Center",
+                "PBS Reno",
+                "Reynolds School of Journalism",
+                "Robert Cashell Fieldhouse",
+                "Ross Hall",
+                "Sarah H. Fleischmann Building",
+                "Savitt Medical Science",
+                "Sierra Hall",
+                "Sierra Street Parking Complex",
+                "Sports Medicine Complex",
+                "Tahoe Center for Environmental Sciences",
+                "Thompson Building",
+                "University Foundation Arts",
+                "Utility Plant",
+                "Valley Road Greenhouse Complex",
+                "Virginia Street Gym",
+                "Visitors Locker Room",
+                "West Stadium Parking Complex",
+                "Brian J. Whalen Parking Complex",
+                "William J. Raggio",
+                "William Peccole Park"
+        };
+
+
+
+        ArrayAdapter<String> buildingAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, buildingNames);
+
+
+        buildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        Spinner spinnerBuildingName = findViewById(R.id.spinnerBuildingName);
+        spinnerBuildingName.setAdapter(buildingAdapter);
+
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Finish the current activity, which will navigate back to the previous activity
                 finish();
+            }
+        });
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String buildingName = spinnerBuildingName.getSelectedItem().toString();
+                spinnerBuildingName.setSelection(0);
+
+                // Pull up the more info for that building name
+
+                Toast.makeText(Search_activity.this, buildingName, Toast.LENGTH_SHORT).show();
             }
         });
 
