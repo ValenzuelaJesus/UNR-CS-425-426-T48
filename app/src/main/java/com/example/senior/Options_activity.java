@@ -56,6 +56,12 @@ public class Options_activity extends AppCompatActivity {
     private static final String COLOR_BLINDNESS_MODE_KEY = "colorBlindnessMode";
     private int colorBlindnessMode = 0;
 
+    private static final String PREF_NAME_DEV = "Dev_options_pref";
+    private static final String KEY_DEVELOPER_OPTIONS = "developer_options";
+
+    private static SharedPreferences preferences;
+    private boolean developerOptionsEnabled;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,8 @@ public class Options_activity extends AppCompatActivity {
         colorBlindnessMode = prefs.getInt(COLOR_BLINDNESS_MODE_KEY, 0);
         applyColorBlindMode(colorBlindnessMode);
 
+        preferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
+        updateButton();
 
         binding.exitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +120,15 @@ public class Options_activity extends AppCompatActivity {
             }
         });
 
+        binding.devoptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                developerOptionsEnabled = !developerOptionsEnabled;
+                setDeveloperOptionsEnabled(developerOptionsEnabled);
+                updateButton();
+            }
+        });
+
         binding.myIntructors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,4 +163,25 @@ public class Options_activity extends AppCompatActivity {
         // Apply color blindness filter
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
+
+    private boolean isDeveloperOptionsEnabled() {
+        return preferences.getBoolean(KEY_DEVELOPER_OPTIONS, false);
+    }
+
+    private void setDeveloperOptionsEnabled(boolean enabled) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(KEY_DEVELOPER_OPTIONS, enabled);
+        editor.apply();
+    }
+
+    private void updateButton() {
+        Button toggleButton = findViewById(R.id.devoptions);
+        if (isDeveloperOptionsEnabled()) {
+            toggleButton.setText("DEV OPTIONS Enabled");
+        } else {
+            toggleButton.setText("DEV OPTIONS Disabled");
+
+        }
+    }
 }
+

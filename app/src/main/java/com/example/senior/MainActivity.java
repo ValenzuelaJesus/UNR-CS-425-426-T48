@@ -111,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private ArrayList<UserNotes> FiltereduserNotesList = new ArrayList<>();
     private ArrayAdapter<UserNotes> adapter;
 
+    private static final String PREF_NAME_DEV = "Dev_options_pref";
+    private static final String KEY_DEVELOPER_OPTIONS = "developer_options";
+
+    private static SharedPreferences Devpreferences;
+
+
 
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -212,6 +218,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ListView listViewNotes = findViewById(R.id.notesListView);
         adapter = new ArrayAdapter<>(this, R.layout.popup_note_list, FiltereduserNotesList);
         listViewNotes.setAdapter(adapter);
+
+       Devpreferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
+       CheckDevView();
 
 
         //AllBuildings = new Building(null, null,0,0).AddAllBuildings();
@@ -586,6 +595,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    private void CheckDevView(){
+        if (Devpreferences.getBoolean(KEY_DEVELOPER_OPTIONS, false) == false){
+            binding.coordinatesTextView.setVisibility(View.INVISIBLE);
+            binding.azimuthTextView.setVisibility(View.INVISIBLE);
         }
     }
 
