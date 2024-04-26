@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Building {
+    private int id;
     private String name;
     private double latitude;
     private double longitude;
@@ -16,7 +17,8 @@ public class Building {
     private String operatingHours;
 
 
-    public Building(String name, String buildingCode, double latitude, double longitude, String buildingNum, String department, String operatingHours) {
+    public Building(int id, String name, String buildingCode, double latitude, double longitude, String buildingNum, String department, String operatingHours) {
+        this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -28,7 +30,8 @@ public class Building {
 
     // Getter methods
     public String getInfo() {
-        return "Name: " + name +
+        return "ID: " + id +
+                ", Name: " + name +
                 ", Latitude: " + latitude +
                 ", Longitude: " + longitude +
                 ", Building Code: " + buildingCode +
@@ -37,6 +40,7 @@ public class Building {
                 ", Operating Hours: " + operatingHours;
     }
 
+    public int getId() {return id;}
     public String getName() {return name;}
 
     public double getLatitude() {return latitude;}
@@ -99,6 +103,7 @@ public class Building {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int id = jsonObject.getInt("id"); // Extract the id
                 String gpsCoords = jsonObject.getString("gps_coords");
                 // Extract the numeric values correctly from the POINT string
                 String coordsString = gpsCoords.substring(gpsCoords.indexOf('(') + 1, gpsCoords.lastIndexOf(')'));
@@ -114,7 +119,8 @@ public class Building {
                     String department = jsonObject.getString("department");
                     String operatingHours = jsonObject.optString("operating_hours", "N/A"); // Use optString to handle missing "operating_hours"
 
-                    buildings[i] = new Building(buildingName, buildingCode, latitude, longitude, buildingNum, department, operatingHours);
+                    // Pass the id when creating a new Building object
+                    buildings[i] = new Building(id, buildingName, buildingCode, latitude, longitude, buildingNum, department, operatingHours);
 
                     // Log the created Building object
                     Log.d("BuildingCreated", "Created: " + buildings[i].getInfo());
@@ -129,6 +135,7 @@ public class Building {
             return null;
         }
     }
+
 }
 
 

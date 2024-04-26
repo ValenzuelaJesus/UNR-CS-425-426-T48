@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private Building[] closestBuildings = new Building[4];
     private Building [] AllBuildings = new Building[99];
+    private DiningOption [] AllDiningOptions = new DiningOption[225];
+    private Library [] AllLibraries = new Library[225];
     private Building LastSuccessfulBuilding;
 
     private static final String PREFS_NAME = "MyPrefsFile";
@@ -236,6 +238,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         //Log.d("WebServiceResult", "String Returned: " +  connectToWebService("http://34.41.18.211/webservices/Building/"));
         String jsonBuildingData = connectToWebService("http://34.41.18.211/webservices/Building/");
         AllBuildings = Building.createBuildingsFromJson(jsonBuildingData);
+        //Log.d("WebServiceResult", "String Returned: " +  connectToWebService("http://34.41.18.211/webservices/dining_option/"));
+        String jsonDiningData = connectToWebService("http://34.41.18.211/webservices/dining_option/");
+        AllDiningOptions = DiningOption.createDiningOptionsFromJson(jsonDiningData);
+        String jsonLibraryData = connectToWebService("http://34.41.18.211/webservices/libraries/");
+        AllLibraries = Library.createLibrariesFromJson(jsonLibraryData);
+
         //connectToWebService("http://34.41.18.211/webservices/dining_option/");
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
