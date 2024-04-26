@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private VendingMachine[] AllVendingMachines = new VendingMachine[255];
     private Resource[] AllResources = new Resource[255];
     private Store[] AllStores = new Store[255];
+    private Lab[] AllLabs = new Lab[255];
+    private Elevator[] AllElevators = new Elevator[255];
+    private Staircase[] AllStaircases = new Staircase[255];
+    private SpecialFeature[] AllSpecialFeatures = new SpecialFeature[255];
 
     private Building LastSuccessfulBuilding;
 
@@ -259,7 +263,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         AllResources = Resource.createResourcesFromJson(jsonResourcesData);
         String jsonStoreData = connectToWebService("http://34.41.18.211/webservices/store/");
         AllStores = Store.createStoreFromJson(jsonStoreData);
-
+        String jsonLabData = connectToWebService("http://34.41.18.211/webservices/labs/");
+        AllLabs = Lab.createLabsFromJson(jsonLabData);
+        String jsonElevatorData = connectToWebService("http://34.41.18.211/webservices/elevators/");
+        AllElevators = Elevator.createElevatorsFromJson(jsonElevatorData);
+        String jsonStaircaseData = connectToWebService("http://34.41.18.211/webservices/staircases/");
+        AllStaircases = Staircase.createStaircasesFromJson(jsonStaircaseData);
+        String jsonSpecialFeaturesData = connectToWebService("http://34.41.18.211/webservices/special_features/");
+        AllSpecialFeatures = SpecialFeature.createSpecialFeaturesFromJson(jsonSpecialFeaturesData);
 
         //connectToWebService("http://34.41.18.211/webservices/dining_option/");
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
