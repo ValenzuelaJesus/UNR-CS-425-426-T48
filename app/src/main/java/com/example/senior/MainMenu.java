@@ -3,6 +3,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,6 +73,16 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View view) {
                 // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
                 Intent i = new Intent(MainMenu.this, Search_activity.class);
+
+
+                startActivity(i);
+            }
+        });
+        binding.WebsiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://www.unr.edu/";
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(i);
             }
         });
