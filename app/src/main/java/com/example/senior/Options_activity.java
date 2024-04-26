@@ -3,6 +3,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -119,10 +120,20 @@ public class Options_activity extends AppCompatActivity {
                 colorBlindnessMode = 0;
 
                 // Update SharedPreferences with the new color blindness mode
-                SharedPreferences preferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
+                SharedPreferences p = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = p.edit();
                 editor.putInt("colorBlindnessMode", colorBlindnessMode);
                 editor.apply();
+
+                SharedPreferences.Editor e = preferences.edit();
+                e.putBoolean(KEY_DEVELOPER_OPTIONS, false);
+                e.apply();
+                updateDevButton();
+
+                SharedPreferences.Editor r = Mutepreferences.edit();
+                r.putBoolean(KEY_MUTE_OPTIONS, true);
+                r.apply();
+                updateMuteButton();
 
                 // Apply the color blindness mode immediately after updating SharedPreferences
                 applyColorBlindMode(colorBlindnessMode);
@@ -195,8 +206,10 @@ public class Options_activity extends AppCompatActivity {
         Button toggleButton = findViewById(R.id.devoptions);
         if (isDeveloperOptionsEnabled()) {
             toggleButton.setText("DEV OPTIONS ON");
+            toggleButton.setTextColor(Color.WHITE);
         } else {
             toggleButton.setText("DEV OPTIONS OFF");
+            toggleButton.setTextColor(Color.RED);
 
         }
     }
@@ -204,9 +217,10 @@ public class Options_activity extends AppCompatActivity {
         Button toggleButton = findViewById(R.id.TextToSpeech);
         if (isMuteEnabled()) {
             toggleButton.setText("TEXT-TO-SPEECH ON");
+            toggleButton.setTextColor(Color.WHITE);
         } else {
             toggleButton.setText("TEXT-TO-SPEECH OFF");
-
+            toggleButton.setTextColor(Color.RED);
         }
     }
     private void setMuteEnabled(boolean enabled) {
