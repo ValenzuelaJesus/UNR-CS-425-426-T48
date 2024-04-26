@@ -98,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private Building [] AllBuildings = new Building[99];
     private DiningOption [] AllDiningOptions = new DiningOption[225];
     private Library [] AllLibraries = new Library[225];
+    private Hangoutspots[] AllHangoutspots = new Hangoutspots[255];
+    private Restroom[] AllRestrooms = new Restroom[255];
+    private VendingMachine[] AllVendingMachines = new VendingMachine[255];
+    private Resource[] AllResources = new Resource[255];
+    private Store[] AllStores = new Store[255];
+
     private Building LastSuccessfulBuilding;
 
     private static final String PREFS_NAME = "MyPrefsFile";
@@ -117,6 +123,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static final String KEY_DEVELOPER_OPTIONS = "developer_options";
 
     private static SharedPreferences Devpreferences;
+
+    private static final String PREF_NAME_MUTE = "Mute_options_pref";
+    private static final String KEY_MUTE_OPTIONS = "Mute_options";
+    private static SharedPreferences Mutepreferences;
 
 
 
@@ -224,6 +234,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
        Devpreferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
        CheckDevView();
 
+       Mutepreferences = getSharedPreferences(PREF_NAME_MUTE, Context.MODE_PRIVATE);
+
+
 
         //AllBuildings = new Building(null, null,0,0).AddAllBuildings();
 
@@ -236,6 +249,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         AllDiningOptions = DiningOption.createDiningOptionsFromJson(jsonDiningData);
         String jsonLibraryData = connectToWebService("http://34.41.18.211/webservices/libraries/");
         AllLibraries = Library.createLibrariesFromJson(jsonLibraryData);
+        String jsonHangoutspotsData = connectToWebService("http://34.41.18.211/webservices/hangoutspots/");
+        AllHangoutspots = Hangoutspots.createHangoutSpotsFromJson(jsonHangoutspotsData);
+        String jsonRestroomsData = connectToWebService("http://34.41.18.211/webservices/restrooms/");
+        AllRestrooms = Restroom.createRestroomsFromJson(jsonRestroomsData);
+        String jsonVendingMachineData = connectToWebService("http://34.41.18.211/webservices/vendingmachines/");
+        AllVendingMachines = VendingMachine.createVendingMachinesFromJson(jsonVendingMachineData);
+        String jsonResourcesData = connectToWebService("http://34.41.18.211/webservices/resources/");
+        AllResources = Resource.createResourcesFromJson(jsonResourcesData);
+        String jsonStoreData = connectToWebService("http://34.41.18.211/webservices/store/");
+        AllStores = Store.createStoreFromJson(jsonStoreData);
+
 
         //connectToWebService("http://34.41.18.211/webservices/dining_option/");
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -527,7 +551,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
     private void speak(String text) {
-        if (textToSpeech != null) {
+
+        if (textToSpeech != null &&  Mutepreferences.getBoolean(KEY_MUTE_OPTIONS, false) != false) {
             // Speak the text
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }
