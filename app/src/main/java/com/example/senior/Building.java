@@ -15,6 +15,17 @@ public class Building {
     private String buildingNum;
     private String department;
     private String operatingHours;
+    private Library[] libraries;
+    private Hangoutspots[] hangoutspots;
+    private Restroom[] restrooms;
+    private VendingMachine[] vendingMachines;
+    private Resource[] resources;
+    private Store[] stores;
+    private Lab[] labs;
+    private Elevator[] elevators;
+    private Staircase[] staircases;
+    private SpecialFeature[] specialFeatures;
+
 
 
     public Building(int id, String name, String buildingCode, double latitude, double longitude, String buildingNum, String department, String operatingHours) {
@@ -134,6 +145,17 @@ public class Building {
             Log.e("Building", "Error parsing JSON", e);
             return null;
         }
+    }
+    public void populateRelatedClasses(JSONArray librariesJson, JSONArray restroomsJson, JSONArray vendingMachinesJson , JSONArray resourcesJson, JSONArray storeJson, JSONArray labJson, JSONArray elevatorJson,JSONArray staircaseJson, JSONArray specialFeaturesJson){
+        this.libraries = Library.createLibrariesFromJson(librariesJson.toString());
+        this.restrooms = Restroom.createRestroomsFromJson(restroomsJson.toString());
+        this.vendingMachines = VendingMachine.createVendingMachinesFromJson(vendingMachinesJson.toString());
+        this.resources = Resource.createResourcesFromJson(resourcesJson.toString());
+        this.stores = Store.createStoreFromJson(storeJson.toString());
+        this.labs = Lab.createLabsFromJson(labJson.toString());
+        this.elevators = Elevator.createElevatorsFromJson(elevatorJson.toString());
+        this.staircases = Staircase.createStaircasesFromJson(staircaseJson.toString());
+        this.specialFeatures = SpecialFeature.createSpecialFeaturesFromJson(specialFeaturesJson.toString());
     }
 
 }
