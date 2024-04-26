@@ -230,25 +230,34 @@
                 app:layout_constraintStart_toStartOf="@id/amenities_title"/>
 
         <TextView
-                android:id="@+id/food_options_title"
+                android:id="@+id/dining_options_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Food Options:"
+                android:text="Dining Options:"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/amenities_textView"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="12dp"/>
         <TextView
-                android:id="@+id/food_options_textView"
+                android:id="@+id/dining_options_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:text="Las Trojes Express - Ground Floor of The Ansari Buisness Building left from Northern Entrance (M-Th: 7:30AM-6:00PM , F: 7:30AM-3:00PM)"
+                android:text="Food Options, Study Rooms, Computer Labs"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/food_options_title"
-                app:layout_constraintStart_toStartOf="@id/food_options_title"/>
+                app:layout_constraintTop_toBottomOf="@id/dining_options_title"
+                app:layout_constraintStart_toStartOf="@id/dining_options_title"/>
+        <ListView
+                android:id="@+id/dining_options_listView"
+                android:layout_width="387dp"
+                android:layout_height="128dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/dining_options_title"
+                app:layout_constraintTop_toBottomOf="@id/dining_options_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

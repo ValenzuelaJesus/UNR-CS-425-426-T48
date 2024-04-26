@@ -1,10 +1,10 @@
 package com.example.senior;
 
 import android.util.Log;
-
-import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class Building {
     private int id;

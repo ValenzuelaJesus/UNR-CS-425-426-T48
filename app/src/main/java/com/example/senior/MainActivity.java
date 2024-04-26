@@ -2,6 +2,7 @@ package com.example.senior;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +14,10 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.activity.result.ActivityResultLauncher;
@@ -34,28 +38,21 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import org.jetbrains.annotations.NotNull;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import android.app.ProgressDialog;
-import android.os.Handler;
-import android.os.Looper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import android.util.Log;
 
 
 // Camera preview was implemented with CameraX documentation as reference
@@ -107,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private Elevator[] AllElevators = new Elevator[255];
     private Staircase[] AllStaircases = new Staircase[255];
     private SpecialFeature[] AllSpecialFeatures = new SpecialFeature[255];
+    private int currentBuildingId;
 
     private Building LastSuccessfulBuilding;
 
@@ -315,11 +313,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binding.MoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
-                Intent i = new Intent(MainActivity.this,MoreInfo.class);
-                startActivity(i);
+                // Pass the current scanned building ID to the MoreInfo activity
+                Intent intent = new Intent(MainActivity.this, MoreInfo.class);
+                intent.putExtra("building_id", currentBuildingId);
+                startActivity(intent);
             }
-
         });
         binding.resetEnvironment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -499,6 +497,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ShowBottomButtons();
         unregisterSensorListeners();
         ShowPopups(building);
+        currentBuildingId = building.getId();
 
 
     }
