@@ -58,6 +58,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/UI"
             android:layout_width="418dp"
             android:layout_height="751dp"
             android:padding="16dp"
@@ -135,6 +136,15 @@
                 app:layout_constraintTop_toBottomOf="@id/hours_textView"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
 
+        <ListView
+                android:id="@+id/resources_listView"
+                android:layout_width="387dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/resources_title"
+                app:layout_constraintTop_toBottomOf="@id/resources_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
+
         <TextView
                 android:id="@+id/resources_textView"
                 android:layout_width="0dp"
@@ -153,7 +163,7 @@
                 android:text="Restrooms:"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/resources_textView"
+                app:layout_constraintTop_toBottomOf="@id/resources_listView"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
 
         <TextView
@@ -216,18 +226,27 @@
                 android:text="Amenities:"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/resources_textView"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="188dp"/>
+                app:layout_constraintTop_toBottomOf="@id/staircases_textView"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
+
         <TextView
                 android:id="@+id/amenities_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
                 android:text="Food Options, Study Rooms, Computer Labs"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amenities_title"
                 app:layout_constraintStart_toStartOf="@id/amenities_title"/>
+
+        <ListView
+                android:id="@+id/amenities_listView"
+                android:layout_width="387dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/amenities_title"
+                app:layout_constraintTop_toBottomOf="@id/amenities_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
                 android:id="@+id/dining_options_title"
@@ -239,6 +258,7 @@
                 app:layout_constraintTop_toBottomOf="@id/amenities_textView"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="12dp"/>
+
         <TextView
                 android:id="@+id/dining_options_textView"
                 android:layout_width="0dp"
@@ -249,16 +269,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dining_options_title"
                 app:layout_constraintStart_toStartOf="@id/dining_options_title"/>
+
         <ListView
                 android:id="@+id/dining_options_listView"
                 android:layout_width="387dp"
-                android:layout_height="128dp"
-                android:layout_marginTop="12dp"
+                android:layout_height="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/dining_options_title"
                 app:layout_constraintTop_toBottomOf="@id/dining_options_title"
                 app:layout_constraintHorizontal_bias="0.0"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
