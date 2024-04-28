@@ -537,9 +537,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         private void ShowPopups(Building building) {
             TextView name = findViewById(R.id.buildingNameTextView);
             TextView code = findViewById(R.id.buildingCodeTextView);
+            TextView hours = findViewById(R.id.buildingHoursTextView);
 
             name.setText(building.getName());
             code.setText(building.getBuildingCode());
+            hours.setText(building.getOperatingHours());
             binding.buildingInfoLayout.setVisibility(View.VISIBLE);
             binding.buildingHoursLayout.setVisibility(View.VISIBLE);
             retrieveUserNotes(building);
