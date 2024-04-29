@@ -1,4 +1,5 @@
 package com.example.senior;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,28 +10,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-
-import com.example.senior.UserNotes;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class NotesFragment extends Fragment {
@@ -67,24 +51,33 @@ public class NotesFragment extends Fragment {
         String[] buildingNames = {"Select A Building",
                 "Agricultural Education Health Building",
                 "Anderson Health Science",
-                "Ansari Business",
+                "Ansari Business Building",
                 "Applied Research Facility",
+                "Argental Hall",
                 "Artemisia Building",
                 "BCN Purchasing",
                 "Building 058",
                 "Canada Hall",
                 "Central Services",
                 "Center for Molecular Medicine",
-                "Chemisty Building",
+                "Chemistry Building",
                 "Child Care Facility",
                 "Church Fine Arts",
                 "Clark Administration",
                 "Claude Howard System Administration (NSHE)",
                 "Computer Center",
+                "David Hall",
+                "Davidson Math and Science Center",
+                "Department of Pediatrics",
                 "Dining Conference Center",
                 "Earthquake Engineering Laboratory",
-                "Edna S. Brigham Clinical Education Building",
+                "Edmund J. Cain Hall",
+                "Effie Mona Mack",
                 "Environmental Research Facility",
+                "E. L. Wiegand Fitness Center",
+                "Equestrian Center",
+                "Edna S. Brigham Clinical Education Building",
+                "Facilities Maintenance Services Receiving Warehouse",
                 "Facilities Services",
                 "Fitzgerald Student Services Building",
                 "Fleischmann Agriculture",
@@ -112,6 +105,8 @@ public class NotesFragment extends Fragment {
                 "Manville Health Science",
                 "Manzanita Hall",
                 "Mathewson-IGT Knowledge Center",
+                "Morrill Hall",
+                "Motor Pool",
                 "National Judicial College Building",
                 "Nell J. Redfield (Student Health Center)",
                 "Nell J. Redfield Building A, Redfield Campus",
@@ -142,6 +137,7 @@ public class NotesFragment extends Fragment {
                 "Ross Hall",
                 "Sarah H. Fleischmann Building",
                 "Savitt Medical Science",
+                "Schulich Lecture Hall",
                 "Sierra Hall",
                 "Sierra Street Parking Complex",
                 "Sports Medicine Complex",
