@@ -48,7 +48,7 @@ class dining_option(models.Model):
     building = models.ForeignKey(building, on_delete = models.CASCADE)
     description = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    operating_hours = models.CharField(max_length=50)
+    operating_hours = models.CharField(max_length=255)
     weblink = models.CharField(max_length=255)
     menulink = models.CharField(max_length=255)
 
