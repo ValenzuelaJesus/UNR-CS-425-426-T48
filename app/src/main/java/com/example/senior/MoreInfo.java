@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.lifecycle.ProcessCameraProvider;
@@ -31,6 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,14 +74,18 @@ public class MoreInfo extends AppCompatActivity {
     private TextView hours;
     private TextView resourcesTextView;
     private ListView resourcesListView;
-    private TextView restrooms;
-    private TextView elevators;
-    private TextView staircases;
+    private TextView restroomsTextView;
+    private ListView restroomsListView;
+    private TextView elevatorsTextView;
+    private ListView elevatorsListView;
+    private TextView staircasesTextView;
+    private ListView staircasesListView;
     private TextView amenitiesTextView;
     private ListView amenitiesListView;
     private TextView diningOptionsTextView;
     private ListView diningOptionsListView;
     private int buildingId;
+
 
 
     @Override
@@ -125,18 +131,33 @@ public class MoreInfo extends AppCompatActivity {
         hours = (findViewById(R.id.hours_textView));
         resourcesListView = (findViewById(R.id.resources_listView));
         resourcesTextView = (findViewById(R.id.resources_textView));
-        restrooms = (findViewById(R.id.restrooms_textView));
-        elevators = (findViewById(R.id.elevators_textView));
-        staircases = (findViewById(R.id.staircases_textView));
+        restroomsListView = (findViewById(R.id.restrooms_listView));
+        restroomsTextView = (findViewById(R.id.restrooms_textView));
+        elevatorsListView = (findViewById(R.id.elevators_listView));
+        elevatorsTextView = (findViewById(R.id.elevators_textView));
+        staircasesListView = (findViewById(R.id.staircases_listView));
+        staircasesTextView = (findViewById(R.id.staircases_textView));
         amenitiesListView = findViewById(R.id.amenities_listView);
         amenitiesTextView = (findViewById(R.id.amenities_textView));
         diningOptionsListView = findViewById(R.id.dining_options_listView);
         diningOptionsTextView = findViewById(R.id.dining_options_textView);
 
         buildingId = getIntent().getIntExtra("building_id", -1);
+        String buildingName = getIntent().getStringExtra("building_name");
 
-        // Find the building with the matching ID
-        Building building = findBuildingById(buildingId);
+        Building building;
+
+        if (buildingId!= -1) {
+            // Find the building with the matching ID
+            building = findBuildingById(buildingId);
+        } else if (buildingName!= null) {
+            // Find the building ID by name
+            building = findBuildingByName(buildingName);
+        } else {
+            Toast.makeText(this, "Error: No Building Found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Update the UI elements with the building information
         updateMoreInfo(building);
@@ -157,6 +178,15 @@ public class MoreInfo extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Building findBuildingByName(String buildingName) {
+        for (Building building : AllBuildings) {
+            if (Objects.equals(building.getName(), buildingName)) {
+                return building;
+            }
+        }
+        return null; // Return null if no building is found
     }
 
     private Building findBuildingById(int id) {
@@ -190,25 +220,52 @@ public class MoreInfo extends AppCompatActivity {
                 updateRestroomTitleConstraints();
             }
 
-            Restroom restroom = findRestroomByBuildingId(buildingId);
-            if (restroom!= null) {
-                restrooms.setText(restroom.getLocation());
+            Options_activity options = new Options_activity();
+            List<String> restroomsList = buildRestroomsList(building, options.isAccessibilityEnabled());
+            if (!restroomsList.isEmpty()) {
+                ArrayAdapter<String> restroomsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, restroomsList);
+                restroomsListView.setAdapter(restroomsAdapter);
+                restroomsListView.setVisibility(View.VISIBLE);
+                restroomsTextView.setVisibility(View.GONE);
+                updateElevatorsTitleConstraints();
             } else {
-                restrooms.setText("N/A");
+                restroomsTextView.setText("N/A");
+                restroomsTextView.setVisibility(View.VISIBLE);
+                restroomsListView.setVisibility(View.GONE);
+                updateElevatorsTitleConstraints();
             }
 
-            Elevator elevator = findElevatorByBuildingId(buildingId);
-            if (elevator != null) {
-                elevators.setText(elevator.getLocation());
+            List<String> elevatorList = buildElevatorsList(building);
+            if (!elevatorList.isEmpty()) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, elevatorList);
+                elevatorsListView.setAdapter(adapter);
+                elevatorsListView.setVisibility(View.VISIBLE);
+                elevatorsTextView.setVisibility(View.GONE);
+                updateStaircasesTitleConstraints();
             } else {
-                elevators.setText("N/A");
+                elevatorsTextView.setText("N/A");
+                elevatorsTextView.setVisibility(View.VISIBLE);
+                elevatorsListView.setVisibility(View.GONE);
+                updateStaircasesTitleConstraints();
             }
 
-            Staircase staircase = findStaircaseByBuildingId(buildingId);
-            if (staircase!= null) {
-                staircases.setText(staircase.getLocation());
+            List<String> staircasesList = buildStaircasesList(building);
+            if (options.isAccessibilityEnabled()) {
+                staircasesTextView.setText("N/A");
+                staircasesTextView.setVisibility(View.VISIBLE);
+                staircasesListView.setVisibility(View.GONE);
+                updateAmenitiesTitleConstraints();
+            } else if (!staircasesList.isEmpty()) {
+                ArrayAdapter<String> staircasesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, staircasesList);
+                staircasesListView.setAdapter(staircasesAdapter);
+                staircasesListView.setVisibility(View.VISIBLE);
+                staircasesTextView.setVisibility(View.GONE);
+                updateAmenitiesTitleConstraints();
             } else {
-                staircases.setText("N/A");
+                staircasesTextView.setText("N/A");
+                staircasesTextView.setVisibility(View.VISIBLE);
+                staircasesListView.setVisibility(View.GONE);
+                updateAmenitiesTitleConstraints();
             }
 
             List<String> amenitiesList = buildAmenitiesList(building);
@@ -242,64 +299,107 @@ public class MoreInfo extends AppCompatActivity {
             buildingNumber.setText("N/A");
             hours.setText("N/A");
             resourcesTextView.setText("N/A");
-            restrooms.setText("N/A");
-            elevators.setText("N/A");
-            staircases.setText("N/A");
+            restroomsTextView.setText("N/A");
+            elevatorsTextView.setText("N/A");
+            staircasesTextView.setText("N/A");
             amenitiesTextView.setText("N/A");
             diningOptionsTextView.setText("N/A");
         }
     }
 
 
-    private Restroom findRestroomByBuildingId(int buildingId) {
+    private List<String> buildRestroomsList(Building building, boolean showAccessibleRestrooms) {
+        List<String> restroomsList = new ArrayList<>();
+
         for (Restroom restroom : AllRestrooms) {
-            if (restroom.getBuilding() == buildingId) {
-                return restroom;
+            if (restroom.getBuilding() == building.getId()) {
+                if (showAccessibleRestrooms && restroom.isAccessibility()) {
+                    restroomsList.add(restroom.getLocation() + " (Accessible)");
+                } else if (!showAccessibleRestrooms) {
+                    restroomsList.add(restroom.getLocation());
+                }
             }
         }
-        return null;
-    }
-    private Elevator findElevatorByBuildingId(int buildingId) {
-        for (Elevator elevator : AllElevators) {
-            if (elevator.getBuilding() == buildingId) {
-                return elevator;
-            }
-        }
-        return null;
+        return restroomsList;
     }
 
-    private Staircase findStaircaseByBuildingId(int buildingId) {
-        for (Staircase staircase : AllStaircases) {
-            if (staircase.getBuilding() == buildingId) {
-                return staircase;
+    private void updateElevatorsTitleConstraints() {
+        ConstraintLayout constraintLayout = findViewById(R.id.UI);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        if (restroomsListView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.elevators_title, ConstraintSet.TOP, R.id.restrooms_listView, ConstraintSet.BOTTOM, 8);
+        } else if (restroomsTextView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.elevators_title, ConstraintSet.TOP, R.id.restrooms_textView, ConstraintSet.BOTTOM, 8);
+        }
+
+        constraintSet.applyTo(constraintLayout);
+    }
+
+    private List<String> buildElevatorsList(Building building) {
+        List<String> elevatorsList = new ArrayList<>();
+        for (Elevator elevator : AllElevators) {
+            if (elevator.getBuilding() == building.getId()) {
+                elevatorsList.add(elevator.getLocation());
             }
         }
-        return null;
+        return elevatorsList;
+    }
+
+    private void updateStaircasesTitleConstraints() {
+        ConstraintLayout constraintLayout = findViewById(R.id.UI);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        if (elevatorsListView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.staircases_title, ConstraintSet.TOP, R.id.elevators_listView, ConstraintSet.BOTTOM, 8);
+        } else if (elevatorsTextView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.staircases_title, ConstraintSet.TOP, R.id.elevators_textView, ConstraintSet.BOTTOM, 8);
+        }
+
+        constraintSet.applyTo(constraintLayout);
+    }
+
+
+    private List<String> buildStaircasesList(Building building) {
+        List<String> staircasesList = new ArrayList<>();
+        for (Staircase staircase : AllStaircases) {
+            if (staircase.getBuilding() == building.getId()) {
+                staircasesList.add(staircase.getLocation());
+            }
+        }
+        return staircasesList;
+    }
+
+    private void updateAmenitiesTitleConstraints() {
+        ConstraintLayout constraintLayout = findViewById(R.id.UI);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        if (staircasesListView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.amenities_title, ConstraintSet.TOP, R.id.staircases_listView, ConstraintSet.BOTTOM, 8);
+        } else if (staircasesTextView.getVisibility() == View.VISIBLE) {
+            constraintSet.connect(R.id.amenities_title, ConstraintSet.TOP, R.id.staircases_textView, ConstraintSet.BOTTOM, 8);
+        }
+
+        constraintSet.applyTo(constraintLayout);
     }
 
     private List<String> buildDiningOptionsList(Building building) {
         List<String> diningOptionsList = new ArrayList<>();
-        List<DiningOption> diningOptions = findDiningOptionsByBuildingId(building.getId());
-        for (DiningOption diningOption : diningOptions) {
-            diningOptionsList.add(diningOption.getDescription());
-            diningOptionsList.add(diningOption.getLocation());
-            diningOptionsList.add(diningOption.getOperatingHours());
-            diningOptionsList.add(diningOption.getWeblink());
-            diningOptionsList.add(diningOption.getMenulink());
-            diningOptionsList.add("");
+        for (DiningOption diningOption : AllDiningOptions) {
+            if (diningOption.getBuilding() == building.getId()) {
+                diningOptionsList.add(diningOption.getDescription());
+                diningOptionsList.add(diningOption.getLocation());
+                diningOptionsList.add(diningOption.getOperatingHours());
+                diningOptionsList.add(diningOption.getWeblink());
+                diningOptionsList.add(diningOption.getMenulink());
+            }
         }
         return diningOptionsList;
     }
 
-    private List<DiningOption> findDiningOptionsByBuildingId(int buildingId) {
-        List<DiningOption> diningOptions = new ArrayList<>();
-        for (DiningOption diningOption : AllDiningOptions) {
-            if (diningOption.getBuilding() == buildingId) {
-                diningOptions.add(diningOption);
-            }
-        }
-        return diningOptions;
-    }
     private List<String> buildResourcesList(Building building) {
         List<String> resourcesList = new ArrayList<>();
 
@@ -309,7 +409,6 @@ public class MoreInfo extends AppCompatActivity {
                 resourcesList.add(resource.getLocation());
                 resourcesList.add(resource.getOperatingHours());
                 resourcesList.add(resource.getWeblink());
-                resourcesList.add("");
             }
         }
 
@@ -317,7 +416,6 @@ public class MoreInfo extends AppCompatActivity {
             if (lab.getBuilding() == building.getId()) {
                 resourcesList.add("Lab: " + lab.getType());
                 resourcesList.add(lab.getLocation());
-                resourcesList.add("");
             }
         }
 
@@ -325,7 +423,6 @@ public class MoreInfo extends AppCompatActivity {
             if (library.getBuilding() == building.getId()) {
                 resourcesList.add("Library: " + library.getDescription());
                 resourcesList.add(library.getLocation());
-                resourcesList.add("");
             }
         }
 
@@ -353,7 +450,6 @@ public class MoreInfo extends AppCompatActivity {
             if (hangoutspots.getBuilding() == building.getId()) {
                 amenitiesList.add("Hangout Spots: " + hangoutspots.getDescription());
                 amenitiesList.add(hangoutspots.getLocation());
-                amenitiesList.add("");
             }
         }
 
@@ -361,7 +457,6 @@ public class MoreInfo extends AppCompatActivity {
             if (specialFeature.getBuilding() == building.getId()) {
                 amenitiesList.add("Special Features: " + specialFeature.getDescription());
                 amenitiesList.add(specialFeature.getLocation());
-                amenitiesList.add("");
             }
         }
 
@@ -369,7 +464,6 @@ public class MoreInfo extends AppCompatActivity {
             if (store.getBuilding() == building.getId()) {
                 amenitiesList.add("Stores: " + store.getDescription());
                 amenitiesList.add(store.getLocation());
-                amenitiesList.add("");
             }
         }
 
@@ -377,7 +471,6 @@ public class MoreInfo extends AppCompatActivity {
             if (vendingMachine.getBuilding() == building.getId()) {
                 amenitiesList.add("Vending Machines: " + vendingMachine.getType());
                 amenitiesList.add(vendingMachine.getLocation());
-                amenitiesList.add("");
             }
         }
 

@@ -166,6 +166,15 @@
                 app:layout_constraintTop_toBottomOf="@id/resources_listView"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
 
+        <ListView
+                android:id="@+id/restrooms_listView"
+                android:layout_width="387dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/restrooms_title"
+                app:layout_constraintTop_toBottomOf="@id/restrooms_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
+
         <TextView
                 android:id="@+id/restrooms_textView"
                 android:layout_width="0dp"
@@ -184,8 +193,17 @@
                 android:text="Elevators:"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/restrooms_textView"
+                app:layout_constraintTop_toBottomOf="@id/restrooms_listView"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
+
+        <ListView
+                android:id="@+id/elevators_listView"
+                android:layout_width="387dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/elevators_title"
+                app:layout_constraintTop_toBottomOf="@id/elevators_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
                 android:id="@+id/elevators_textView"
@@ -207,6 +225,15 @@
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/elevators_textView"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
+
+        <ListView
+                android:id="@+id/staircases_listView"
+                android:layout_width="387dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/staircases_title"
+                app:layout_constraintTop_toBottomOf="@id/staircases_title"
+                app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
                 android:id="@+id/staircases_textView"

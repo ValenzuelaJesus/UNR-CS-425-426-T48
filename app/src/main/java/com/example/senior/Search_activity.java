@@ -1,38 +1,18 @@
 package com.example.senior;
+
 import android.Manifest;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import android.content.Intent;
-
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.Preview;
-import androidx.core.content.ContextCompat;
-
-import androidx.camera.core.Camera;
-import androidx.camera.view.PreviewView;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-
-import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivitySearchBinding;
-
-import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.common.util.concurrent.ListenableFuture;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 
 public class Search_activity extends AppCompatActivity {
@@ -181,7 +161,9 @@ public class Search_activity extends AppCompatActivity {
                 String buildingName = spinnerBuildingName.getSelectedItem().toString();
                 spinnerBuildingName.setSelection(0);
 
-                // Pull up the more info for that building name
+                Intent intent = new Intent(Search_activity.this, MoreInfo.class);
+                intent.putExtra("building_name", buildingName);
+                startActivity(intent);
 
                 Toast.makeText(Search_activity.this, buildingName, Toast.LENGTH_SHORT).show();
             }

@@ -1,46 +1,21 @@
 package com.example.senior;
+
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 import android.widget.Button;
-
-import android.content.Intent;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.drawable.Drawable;
-
-
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.Preview;
-import androidx.core.content.ContextCompat;
-
-import androidx.camera.core.Camera;
-import androidx.camera.view.PreviewView;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleOwner;
 import com.example.senior.databinding.ActivityOptionsBinding;
-
-import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.common.util.concurrent.ListenableFuture;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 
 public class Options_activity extends AppCompatActivity {
@@ -70,6 +45,12 @@ public class Options_activity extends AppCompatActivity {
     private static SharedPreferences Mutepreferences;
     private boolean MuteEnabled;
 
+    private static final String PREF_NAME_ACCESSIBILITY = "Accessibility_options_pref";
+    private static final String KEY_ACCESSIBILITY_OPTIONS = "accessibility_options";
+    private static SharedPreferences Accessibilitypreferences;
+    private boolean AccessibilityEnabled;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +66,10 @@ public class Options_activity extends AppCompatActivity {
 
         preferences = getSharedPreferences(PREF_NAME_DEV, Context.MODE_PRIVATE);
         Mutepreferences = getSharedPreferences(PREF_NAME_MUTE, Context.MODE_PRIVATE);
+        Accessibilitypreferences = getSharedPreferences(PREF_NAME_ACCESSIBILITY, Context.MODE_PRIVATE);
         updateDevButton();
         updateMuteButton();
+        updateAccessibilityButton();
 
         binding.exitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +118,12 @@ public class Options_activity extends AppCompatActivity {
                 r.apply();
                 updateMuteButton();
 
+                SharedPreferences.Editor a = Accessibilitypreferences.edit();
+                a.putBoolean(KEY_ACCESSIBILITY_OPTIONS, false);
+                a.apply();
+                updateAccessibilityButton();
+
+
                 // Apply the color blindness mode immediately after updating SharedPreferences
                 applyColorBlindMode(colorBlindnessMode);
             }
@@ -154,6 +143,15 @@ public class Options_activity extends AppCompatActivity {
                 MuteEnabled = !MuteEnabled;
                 setMuteEnabled(MuteEnabled);
                 updateMuteButton();
+            }
+        });
+
+        binding.Accessibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AccessibilityEnabled = !AccessibilityEnabled;
+                setAccessibilityEnabled(AccessibilityEnabled);
+                updateAccessibilityButton();
             }
         });
 
@@ -231,5 +229,29 @@ public class Options_activity extends AppCompatActivity {
     private boolean isMuteEnabled() {
         return Mutepreferences.getBoolean(KEY_MUTE_OPTIONS, false);
     }
-}
 
+    private void updateAccessibilityButton() {
+        Button toggleButton = findViewById(R.id.Accessibility);
+        if (isAccessibilityEnabled()) {
+            toggleButton.setText("ACCESSIBILITY ON");
+            toggleButton.setTextColor(Color.WHITE);
+        } else {
+            toggleButton.setText("ACCESSIBILITY OFF");
+            toggleButton.setTextColor(Color.RED);
+        }
+    }
+
+    private void setAccessibilityEnabled(boolean enabled) {
+        SharedPreferences.Editor editor = Accessibilitypreferences.edit();
+        editor.putBoolean(KEY_ACCESSIBILITY_OPTIONS, enabled);
+        editor.apply();
+    }
+
+    public boolean isAccessibilityEnabled() {
+        if (Accessibilitypreferences!= null) {
+            return Accessibilitypreferences.getBoolean(KEY_ACCESSIBILITY_OPTIONS, true);
+        } else {
+            return false;
+        }
+    }
+}
