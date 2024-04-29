@@ -63,7 +63,7 @@ public class MainMenu extends AppCompatActivity {
         binding.ARbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // SEARCH BUTTON FUNCTIONALITY WILL GO HERE
+                Toast.makeText(MainMenu.this, "Please wait... ", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(MainMenu.this, MainActivity.class);
                 startActivity(i);
             }
