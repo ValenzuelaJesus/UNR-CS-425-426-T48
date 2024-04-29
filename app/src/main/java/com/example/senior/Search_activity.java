@@ -165,7 +165,7 @@ public class Search_activity extends AppCompatActivity {
                 intent.putExtra("building_name", buildingName);
                 startActivity(intent);
 
-                Toast.makeText(Search_activity.this, buildingName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search_activity.this, "Fetching "+buildingName, Toast.LENGTH_SHORT).show();
             }
         });
 

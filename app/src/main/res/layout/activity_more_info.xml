@@ -12,7 +12,7 @@
             android:id="@+id/banner"
             android:layout_width="418dp"
             android:layout_height="139dp"
-            android:background="#B5C9DB"
+            android:background="@android:color/darker_gray"
             android:padding="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
