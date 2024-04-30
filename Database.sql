@@ -321,10 +321,10 @@ INSERT INTO building values ('POINT( -119.81276665232328 39.548421152290835  )',
         INSERT INTO library Values ('MIKC', 'Floors 2 to 5 of the Mathewson IGT Knowledge Center', 'This library is known as the knowledge center and features a robust collection of books, servicies and assistance for all students.');
     --Joe Crowley Student Center
         --Building Code 'JCSU'
-        INSERT INTO dining_option VALUES ('JCUS','The Habit Burger','Joe Crowley Student Union building 2nd Floor','M-Th: 11:00AM-7:00PM F:11:00AM-5:00PM','https://dineoncampus.com/unr/hours-of-operation', 'https://dineoncampus.com/unr/whats-on-the-menu');
-        INSERT INTO dining_option VALUES ('JCUS','Starbucks','Joe Crowley Student Union building 1st Floor','M-F: 7:00AM-9:00PM Sa-Su:10:00AM-7:00PM','https://www.starbucks.com/store-locator/store/1022313/virginia-15th-unr-1664-n-virginia-street-192-c-reno-nv-895030705-us', 'www.starbucks.com');
-        INSERT INTO dining_option VALUES ('JCUS','Panda Express','Joe Crowley Student Union building 2nd Floor','M-F: 11:00AM-4:00PM','www.pandaexpress.com', 'https://www.pandaexpress.com/location/university-nevada-reno-px/menu');
-        INSERT INTO dining_option VALUES ('JCUS','Del Lobo Mexican Grill','Joe Crowley Student Union building 2nd Floor','M-Th: 10:00AM-5:00PM F:11:00AM-2:00PM','N/A', 'https://www.zmenu.com/del-lobo-mexican-grille-reno-online-menu/');
+        INSERT INTO dining_option VALUES ('JCSU','The Habit Burger','Joe Crowley Student Union building 2nd Floor','M-Th: 11:00AM-7:00PM F:11:00AM-5:00PM','https://dineoncampus.com/unr/hours-of-operation', 'https://dineoncampus.com/unr/whats-on-the-menu');
+        INSERT INTO dining_option VALUES ('JCSU','Starbucks','Joe Crowley Student Union building 1st Floor','M-F: 7:00AM-9:00PM Sa-Su:10:00AM-7:00PM','https://www.starbucks.com/store-locator/store/1022313/virginia-15th-unr-1664-n-virginia-street-192-c-reno-nv-895030705-us', 'www.starbucks.com');
+        INSERT INTO dining_option VALUES ('JCSU','Panda Express','Joe Crowley Student Union building 2nd Floor','M-F: 11:00AM-4:00PM','www.pandaexpress.com', 'https://www.pandaexpress.com/location/university-nevada-reno-px/menu');
+        INSERT INTO dining_option VALUES ('JCSU','Del Lobo Mexican Grill','Joe Crowley Student Union building 2nd Floor','M-Th: 10:00AM-5:00PM F:11:00AM-2:00PM','N/A', 'https://www.zmenu.com/del-lobo-mexican-grille-reno-online-menu/');
     --Fitzgerald Student Services Center
         --Building Code 'FSSB'
         INSERT INTO dining_option VALUES ('FSSB','Panera Bread','Located on the First Floor of the Fitzgerald Student Services Center.','M-F: 7:30AM-5:00PM','https://dineoncampus.com/unr/hours-of-operation', 'https://www.panerabread.com/en-us/home.html');
@@ -361,7 +361,7 @@ FROM moved_rows;
 
 
 
-
+sudo -u postgres psql
 
 
 
@@ -384,7 +384,7 @@ INSERT INTO webservices_building values ( 3,'POINT( -119.80714192765134 39.53793
 INSERT INTO webservices_building values ( 4,'POINT(-119.81470412193153  39.54007058321954  )','AB', 'Ansari Business Building', '063','Business','M-F: 7:00AM - 10:00PM');
 INSERT INTO webservices_building values ( 5,'POINT( -119.81691800338545 39.549433835782935 )','AHS', 'Anderson Health Science', '128','Medicine','TBD');
 INSERT INTO webservices_building values ( 6,'POINT(-119.81479058989372  39.54468807462003  )','ARF', 'Applied Research Facility', '090','Science','M-F: 8:00AM - 8:00PM Sa:10:00AM - 5:00PM');
-INSERT INTO webservices_building values ( 7,'POINT( -119.81801802058668 39.539360806965625 )','AHS', 'Argenta Hall', '008','Residence','N/A');
+INSERT INTO webservices_building values ( 7,'POINT( -119.81801802058668 39.539360806965625 )','AH', 'Argenta Hall', '008','Residence','N/A');
 INSERT INTO webservices_building values ( 8,'POINT(-119.81806124756608  39.53872881130598  )','ARTM', 'Artemisia Building', '012','Faculty','N/A');
 INSERT INTO webservices_building values ( 9,'POINT( -119.81828858804131 39.549105445421496 )','PD', 'BCN Purchasing', '137','Faculty','N/A')  ; 
 INSERT INTO webservices_building values ( 10,'POINT(-119.81450046105799  39.53989658633081  )','FRX', 'Building 058', '058','Faculty','N/A')  ; 
@@ -403,7 +403,7 @@ INSERT INTO webservices_building values ( 22,'POINT( -119.81633160153339 39.5479
 INSERT INTO webservices_building values ( 23,'POINT( -119.81812906105802 39.53894473275393  )','DCC', 'Dining Conference Center', '009','Dining','Variable');
 INSERT INTO webservices_building values ( 24,'POINT( -119.81257064756609 39.540647310686346 )','EEL', 'Earthquake Engineering Laboratory', '066','Engineering','N/A');
 INSERT INTO webservices_building values ( 25,'POINT( -119.81409834571366 39.5421630071627   )','EJCH', 'Edmund J. Cain Hall', '081','Education','M-F: 7:00AM - 10:00PM');
-INSERT INTO webservices_building values ( 26,'POINT( -119.81513256139232 39.54061282624209  )','EJCH', 'Effie Mona Mack', '072','Education','M-F: 7:00AM - 10:00PM');
+INSERT INTO webservices_building values ( 26,'POINT( -119.81513256139232 39.54061282624209  )','EMM', 'Effie Mona Mack', '072','Education','M-F: 7:00AM - 10:00PM');
 INSERT INTO webservices_building values ( 27,'POINT( -119.81941283036929 39.548034312301894 )','ERF', 'Environmental Research Facility', '130','Science','N/A');
 INSERT INTO webservices_building values ( 28,'POINT( -119.81745600338566 39.543854482953776 )','WFC', 'E. L. Wiegand Fitness Center', '086','Fitness','M-F: 6:00AM - 12:00AM, Sa: 8:00AM - 10:00PM, Su: 10:00AM - 10:00PM');
 INSERT INTO webservices_building values ( 29,'POINT( -119.80748154571378 39.54119421444668  )','EC', 'Equestrian Center', '170','Equine','N/A');
@@ -426,7 +426,7 @@ INSERT INTO webservices_building values ( 45,'POINT( -119.81655530380719 39.5386
 INSERT INTO webservices_building values ( 46,'POINT( -119.81659953585844 39.53800708874398  )','JH', 'Juniper Hall', '041','Residence','N/A');
 INSERT INTO webservices_building values ( 47,'POINT( -119.80702042306237 39.53866406410878  )','KRC', 'Knudtsen Resource Center', '171','Various','8:00AM - 5:00PM');
 INSERT INTO webservices_building values ( 48,'POINT( -119.81831999352988 39.54508262817868  )','LEC', 'Lawlor Events Center', '104','Sports/Events','N/A');
-INSERT INTO webservices_building values ( 49,'POINT( -119.81727249428408 39.5452995536064   )','LEC', 'Legacy Hall', '103','Sports','N/A');
+INSERT INTO webservices_building values ( 49,'POINT( -119.81727249428408 39.5452995536064   )','LEGH', 'Legacy Hall', '103','Sports','N/A');
 INSERT INTO webservices_building values ( 50,'POINT( -119.81405833921025 39.5411347920165   )','LP', 'Leifson Physics', '074','Physics','8:00AM - 5:00PM');
 INSERT INTO webservices_building values ( 51,'POINT( -119.81243122791577 39.53830962250762  )','LS', 'Life Science', '032','Science','N/A'); -- May be a duplicate of the FLeishmann Life Sciences webservices_building
 INSERT INTO webservices_building values ( 52,'POINT( -119.81634831431705 39.53939404616184  )','LH', 'Lincoln Hall', '060','Faculty','N/A');
@@ -437,7 +437,7 @@ INSERT INTO webservices_building values ( 56,'POINT( -119.81753560338552 39.5469
 INSERT INTO webservices_building values ( 57,'POINT( -119.81622530337829 39.54967603750378  )','MHS', 'Manville Health Science', '126','Medicine','N/A');
 INSERT INTO webservices_building values ( 58,'POINT( -119.81622934448338 39.53730313732111  )','MAH', 'Manzanita Hall', '040','Residence','N/A');
 INSERT INTO webservices_building values ( 59,'POINT( -119.8157398033857  39.54344534908103  )','MIKC', 'Mathewson-IGT Knowledge Center', '085','Resources','8:00AM - 5:00PM');
-INSERT INTO webservices_building values ( 60,'POINT( -119.81390335945643 39.53761787555032  )','MH', 'Morrill Hall', '034','Residence','N/A')
+INSERT INTO webservices_building values ( 60,'POINT( -119.81390335945643 39.53761787555032  )','MH', 'Morrill Hall', '034','Residence','N/A');
 INSERT INTO webservices_building values ( 61,'POINT( -119.81811830337998 39.54982313524179  )','MP', 'Motor Pool', '145','Facilty','N/A');
 INSERT INTO webservices_building values ( 62,'POINT( -119.81774227454976 39.54034528703201  )','NLLC', 'Nevada Living Learning Community', '004','Residence','N/A');
 INSERT INTO webservices_building values ( 63,'POINT( -119.81390522117059 39.54293239807674  )','NJC', 'National Judicial College Building', '084','Law','M-F: 7:30AM - 4:30PM');
@@ -486,6 +486,8 @@ INSERT INTO webservices_building values ( 105,'POINT( -119.81711134174756 39.543
 INSERT INTO webservices_building values ( 106,'POINT( -119.81509340338572 39.54203468203159  )','WRB', 'William J. Raggio', '080','Education','M-F: 8:00AM - 5:00PM' );
 INSERT INTO webservices_building values ( 107,'POINT( -119.81276665232328 39.548421152290835  )','WPP', 'William Peccole Park', '114','Sports','N/A' );
 
+INSERT INTO webservices_building values (108,'POINT( -119.81709093224457 39.537792180178506  )','CEB', 'Continuing Education Building', '808','Admin','M-F:8:00-5:00pm' );--added for title 9 and equal opportunity office
+
 --The Following command was used to transfer data from dining_option to webservices_dining_option
 INSERT INTO webservices_dining_option (building_id, description, location, operating_hours, weblink, menulink)
 SELECT
@@ -519,3 +521,190 @@ INSERT INTO webservices_elevator values (1, 'Located Near the center of the buil
 INSERT INTO webservices_staircase values (1, 'Located Near the center of the building. Near 1st Floor and 2cd Floor Entrances. Next to staircases', 76);
 
 INSERT INTO webservices_special_feature values (1, 'Located on the first floor towards the south', '100 Clean Room', 76);
+--Fixed missing JSCU Dining_Options
+INSERT INTO webservices_dining_option VALUES (1,'The Habit Burger','Joe Crowley Student Union building 2nd Floor','M-Th: 11:00AM-7:00PM F:11:00AM-5:00PM','https://dineoncampus.com/unr/hours-of-operation', 'https://dineoncampus.com/unr/whats-on-the-menu',43);
+INSERT INTO webservices_dining_option VALUES (2,'Starbucks','Joe Crowley Student Union building 1st Floor','M-F: 7:00AM-9:00PM Sa-Su:10:00AM-7:00PM','https://www.starbucks.com/store-locator/store/1022313/virginia-15th-unr-1664-n-virginia-street-192-c-reno-nv-895030705-us', 'www.starbucks.com',43);
+INSERT INTO webservices_dining_option VALUES (22,'Panda Express','Joe Crowley Student Union building 2nd Floor','M-F: 11:00AM-4:00PM','www.pandaexpress.com', 'https://www.pandaexpress.com/location/university-nevada-reno-px/menu',43);
+INSERT INTO webservices_dining_option VALUES (23,'Del Lobo Mexican Grill','Joe Crowley Student Union building 2nd Floor','M-Th: 10:00AM-5:00PM F:11:00AM-2:00PM','N/A', 'https://www.zmenu.com/del-lobo-mexican-grille-reno-online-menu/',43);
+--Gender Exclusive Restrooms, ADA Compliant
+--Center for Molecular Medicine
+INSERT INTO webservices_restroom values (2,'Gender-Inclusive: East wing, first floor, #R107', TRUE, 13);
+INSERT INTO webservices_restroom values (3,'Gender-Inclusive: East wing, first floor, #R108' , TRUE, 13);
+INSERT INTO webservices_restroom values (4,'Gender-Inclusive: West wing, second floor, #LR201', TRUE, 13);
+INSERT INTO webservices_restroom values (5,'Gender-Inclusive: West wing, second floor, #LR202', TRUE, 13);
+INSERT INTO webservices_restroom values (6,'Gender-Inclusive: West wing, third floor, #LR301', TRUE, 13);
+INSERT INTO webservices_restroom values (7,'Gender-Inclusive: West wing, third floor, #LR302' ,TRUE, 13);
+--Howard Medical Sciences
+INSERT INTO webservices_restroom values (8,'Gender-Inclusive: First floor, #159',TRUE, 41);
+INSERT INTO webservices_restroom values (9,'Gender-Inclusive: Second floor, #213',TRUE, 41);
+--Mackay Stadium
+INSERT INTO webservices_restroom values (10,'Gender-Inclusive: SW Women’s Restroom Building, first floor, #R102 (available during Stadium events only)',TRUE, 56);
+--Nell J.Redfield
+INSERT INTO webservices_restroom values (11,'Gender-Inclusive: First floor, #R101',TRUE, 64);
+--Savitt Medical Science
+INSERT INTO webservices_restroom values (12,'Gender-Inclusive: Ground floor, #R001',FALSE, 91);
+INSERT INTO webservices_restroom values (13,'Gender-Inclusive: Ground floor, #R002',FALSE, 91);
+--Sporsts Medicine Complex
+INSERT INTO webservices_restroom values (14,'Gender-Inclusive: First floor, #R100',TRUE, 96);
+--William N Pennington Health Sciences
+INSERT INTO webservices_restroom values (15,'Gender-Inclusive: First floor, #R100',TRUE, 77);
+INSERT INTO webservices_restroom values (16,'Gender-Inclusive: First floor, #R101',TRUE, 77);
+--William N. Pennington Medical Education
+INSERT INTO webservices_restroom values (17,'Gender-Inclusive: Ground Floor, #R101',TRUE, 78);
+--E. L. Wiegand Fitness Center 
+INSERT INTO webservices_restroom values (18,'Gender-Inclusive: First floor, #R106 (fitness center pass required)',TRUE, 28);
+INSERT INTO webservices_restroom values (19,'Gender-Inclusive: Third floor, #R301 (fitness center pass required)',TRUE, 28);
+INSERT INTO webservices_restroom values (20,'Gender-Inclusive: Third floor, #R302 (fitness center pass required)',TRUE, 28);
+--Joe Crowley Student Union 
+INSERT INTO webservices_restroom values (21,'Gender-Inclusive: First floor, #R101',TRUE, 40);
+INSERT INTO webservices_restroom values (22,'Gender-Inclusive: Fourth floor, #R402',TRUE, 40);
+-- Mathewson-IGT Knowledge Center
+INSERT INTO webservices_restroom values (23,'Gender-Inclusive: First floor, #R100',FALSE, 59);
+INSERT INTO webservices_restroom values (24,'Gender-Inclusive: Second floor, #R202',TRUE, 59);
+INSERT INTO webservices_restroom values (25,'Gender-Inclusive: Second floor, #R203',TRUE, 59);
+INSERT INTO webservices_restroom values (26,'Gender-Inclusive: Third floor, #R302',TRUE, 59);
+INSERT INTO webservices_restroom values (27,'Gender-Inclusive: Third floor, #R303',TRUE, 59);
+INSERT INTO webservices_restroom values (28,'Gender-Inclusive: Third floor, #R304',TRUE, 59);
+INSERT INTO webservices_restroom values (29,'Gender-Inclusive: Third floor, #R305',TRUE, 59);
+INSERT INTO webservices_restroom values (30,'Gender-Inclusive: Fourth floor, #R402',TRUE, 59);
+INSERT INTO webservices_restroom values (31,'Gender-Inclusive: Fourth floor, #R403',TRUE, 59);
+INSERT INTO webservices_restroom values (32,'Gender-Inclusive: Fifth floor, #R502',TRUE, 59);
+INSERT INTO webservices_restroom values (33,'Gender-Inclusive: Fifth floor, #R503',TRUE, 59);
+--Schulich Lecture Hall
+INSERT INTO webservices_restroom values (34,'Gender-Inclusive: Basement, #R001',FALSE, 92);
+--University Foundation Arts 
+INSERT INTO webservices_restroom values (35,'Gender-Inclusive: Second floor, #R209',TRUE, 99);
+--Virginia Street Gym
+INSERT INTO webservices_restroom values (36,'Gender-Inclusive: First floor, #R103',TRUE, 102);
+--Clark Administration
+INSERT INTO webservices_restroom values (37,'Gender-Inclusive: Second floor, #R200',TRUE, 17);
+--Davidson Math and Science Center
+INSERT INTO webservices_restroom values (38,'Gender-Inclusive: First floor, #R103',TRUE, 21);
+--Earthquake Engineering Laboratory
+INSERT INTO webservices_restroom values (39,'Gender-Inclusive: First floor, #R101',TRUE, 24);
+INSERT INTO webservices_restroom values (40,'Gender-Inclusive: First floor, #R102',TRUE, 24);
+INSERT INTO webservices_restroom values (41,'Gender-Inclusive: Third floor, #R301',TRUE, 24);
+INSERT INTO webservices_restroom values (42,'Gender-Inclusive: Third floor, #R302',TRUE, 24);
+--Fleischmann Agriculture and Life Science 
+INSERT INTO webservices_restroom values (43,'Gender-Inclusive: Third floor inside Museum of Natural History, #R303 (available during museum open hours only)',TRUE, 64);
+--Great Basin Hall
+INSERT INTO webservices_restroom values (44,'Gender-Inclusive: First floor, #009',TRUE, 38);
+INSERT INTO webservices_restroom values (45,'Gender-Inclusive: Ground floor, #G013',TRUE, 38);
+--Jones Center
+INSERT INTO webservices_restroom values (46,'Gender-Inclusive: First floor, #R100',FALSE, 44);
+INSERT INTO webservices_restroom values (47,'Gender-Inclusive: First floor, #R101',FALSE, 44);
+--Jot Travis Building
+INSERT INTO webservices_restroom values (48,'Gender-Inclusive: First floor, #R129',FALSE, 45);
+INSERT INTO webservices_restroom values (49,'Gender-Inclusive: First floor, #R130',FALSE, 45);
+INSERT INTO webservices_restroom values (50,'Gender-Inclusive: Second floor, #R205',TRUE, 45);
+--Lincoln Hall 
+INSERT INTO webservices_restroom values (51,'Gender-Inclusive: Second floor, #R200',TRUE, 52);
+INSERT INTO webservices_restroom values (52,'Gender-Inclusive: Second floor, #R201',TRUE, 52);
+INSERT INTO webservices_restroom values (53,'Gender-Inclusive: Third floor, #R300',TRUE, 52);
+INSERT INTO webservices_restroom values (54,'Gender-Inclusive: Third floor, #R301',TRUE, 52);
+--Mackay Mines
+INSERT INTO webservices_restroom values (55,'Gender-Inclusive: First floor, #R101',TRUE, 54);
+INSERT INTO webservices_restroom values (56,'Gender-Inclusive: First floor, #R102',FALSE, 54);
+INSERT INTO webservices_restroom values (57,'Gender-Inclusive: Ground floor, #R001',TRUE, 54);
+INSERT INTO webservices_restroom values (58,'Gender-Inclusive: Ground floor, #R002',TRUE, 54);
+INSERT INTO webservices_restroom values (59,'Gender-Inclusive: Second floor, #R201',TRUE, 54);
+INSERT INTO webservices_restroom values (60,'Gender-Inclusive: Second floor, #R202',TRUE, 54);
+INSERT INTO webservices_restroom values (61,'Gender-Inclusive: Third floor, #R301',FALSE, 54);
+INSERT INTO webservices_restroom values (62,'Gender-Inclusive: Third floor, #R302',FALSE, 54);
+--Mackay Science 
+INSERT INTO webservices_restroom values (63,'Gender-Inclusive: First floor, #R101',TRUE, 55);
+INSERT INTO webservices_restroom values (64,'Gender-Inclusive: First floor, #R102',TRUE, 55);
+INSERT INTO webservices_restroom values (65,'Gender-Inclusive: Second floor, #R201',TRUE, 55);
+--Morrill Hall
+INSERT INTO webservices_restroom values (66,'Gender-Inclusive: Basement, #R001*',FALSE, 60);
+INSERT INTO webservices_restroom values (67,'Gender-Inclusive: Basement, #R002*',FALSE, 60);
+INSERT INTO webservices_restroom values (68,'Gender-Inclusive: First floor, #100',TRUE, 60);
+INSERT INTO webservices_restroom values (69,'Gender-Inclusive: First floor, #103*',FALSE, 60);
+INSERT INTO webservices_restroom values (70,'Gender-Inclusive: Second floor, #201',TRUE, 60);
+INSERT INTO webservices_restroom values (71,'Gender-Inclusive: Second floor, #204*',FALSE, 60);
+--Sarah H. Fleischmann
+INSERT INTO webservices_restroom values (72,'Gender-Inclusive: Basement, #R002*',FALSE, 90);
+INSERT INTO webservices_restroom values (73,'Gender-Inclusive: Basement, #R001*',FALSE, 90);
+--Scrugham Engineering and Mines 
+INSERT INTO webservices_restroom values (74,'Gender-Inclusive: Ground floor, #R001*',FALSE, 1);
+INSERT INTO webservices_restroom values (75,'Gender-Inclusive: Third floor, #R303*',FALSE, 1);
+INSERT INTO webservices_restroom values (76,'Gender-Inclusive: Third floor, #R304*',FALSE, 1);
+INSERT INTO webservices_restroom values (77,'Gender-Inclusive: Fourth floor, #R401*',FALSE, 1);
+--Thompson Building 
+INSERT INTO webservices_restroom values (78,'Gender-Inclusive: First floor, #R101',TRUE, 98);
+--William N. Pennington Engineering Building 
+INSERT INTO webservices_restroom values (79,'Gender-Inclusive: Second floor, #R202',TRUE, 76);
+INSERT INTO webservices_restroom values (80,'Gender-Inclusive: Second floor, #R203',TRUE, 76);
+--Argenta Hall 
+INSERT INTO webservices_restroom values (81,'Gender-Inclusive: Mezzanine Level, #R200 (currently closed for renovation)*',FALSE, 7);
+INSERT INTO webservices_restroom values (82,'Gender-Inclusive: Mezzanine Level, #R201(currently closed for renovation)*',FALSE, 7);
+--Peavine Hall
+INSERT INTO webservices_restroom values (83,'Gender-Inclusive: First Floor, #R108',TRUE, 75);
+--Sierra Hall 
+INSERT INTO webservices_restroom values (84,'Gender-Inclusive: First Floor, #R100*',FALSE, 84);
+INSERT INTO webservices_restroom values (85,'Gender-Inclusive: First Floor, #R100*',FALSE, 84);
+--University Health Building
+INSERT INTO webservices_restroom values (86,'Gender-Inclusive: First floor, #R105',TRUE, 2);
+--Innevation Center
+INSERT INTO webservices_restroom values (87,'Gender-Inclusive: Basement, #R001',TRUE, 42);
+--Knudtsen Resource Center
+INSERT INTO webservices_restroom values (88,'Gender-Inclusive: First floor, #129A',TRUE, 47);
+INSERT INTO webservices_restroom values (89,'Gender-Inclusive: First floor, #129B',TRUE, 47);
+--Holman Arts & Media Center
+INSERT INTO webservices_restroom values (90,'Gender-Inclusive: First floor, #R101',TRUE, 48);
+INSERT INTO webservices_restroom values (91,'Gender-Inclusive: Second floor, #R201',TRUE, 48);
+INSERT INTO webservices_restroom values (92,'Gender-Inclusive: Second floor, #R202',TRUE, 48);
+INSERT INTO webservices_restroom values (93,'Gender-Inclusive: Second floor, #R203',TRUE, 48);
+--Patterson Hall
+INSERT INTO webservices_restroom values (94,'Gender-Inclusive: First floor, #01C03A*',FALSE, 72);
+--Prim Library
+INSERT INTO webservices_restroom values (95,'Gender-Inclusive: Basement, #B007*',FALSE, 82);
+
+--Resources
+--Fleischmann Agriculture
+INSERT INTO webservices_resource values (2, 'CABNR Student Center Academic Advising','Room 236','M-F: 9am-5pm','https://www.unr.edu/cabnr/advising', 34);
+INSERT INTO webservices_resource values (3, 'CABNR Student Lounge, Containing Computers Printers, Group Study and Internet Access','Room 237A','M-F: 9am-5pm', 'N/A', 34);
+--Health and Counseling Services
+INSERT INTO webservices_resource values (4, 'UNR Student Health Center. If you need to be seen in an emergency, please call 911 and go to the nearest Emergency Department. Tel: (775) 784-6598 Fax: (775) 784-1298 E-mail: ejennings@unr.edu','Room 196','M-F: 9am-5pm','https://med.unr.edu/student-affairs/health-and-wellness/wellness-program/health-and-counseling-services', 64);
+INSERT INTO webservices_resource values (5, 'UNR Counseling Services. Crisis Call Hotline: (775) 784-8090 National Suicide Prevention Hotline: (800) 273-8255 Hope Line Network: (800) 784-2433','Room 202','M-Th: 8am-8pm F:8:00am-5:00pm','https://med.unr.edu/student-affairs/health-and-wellness/wellness-program/health-and-counseling-services',98);
+--DRC
+INSERT INTO webservices_resource values (6, 'Disablity Resource Center DRC. Tel:(775)784-6000','Suite 230','M-F: 9am-5pm','https://www.unr.edu/accessibility#assistance', 79);
+--Math Center
+INSERT INTO webservices_resource values (7, 'Math Center. Tutoring Services, Computer Lab, Calculator Rentals','Room 236','M-Th: 9am-6pm F:9:00am-4:00pm','https://www.unr.edu/university-math-center', 79);
+--Writing Center
+INSERT INTO webservices_resource values (8, 'Writing & Speaking Center.','Suite 350 ','Check Website','https://www.unr.edu/writing-speaking-center', 79);
+--Maker Space
+INSERT INTO webservices_resource values (9, 'The makerspace hosts many tools for students to rent, computers for students to use, and a soldering suite for students to utilize.','Basement of DeLaMare take a left from the entrance and down a ramp','M-F:8:00am-12:00am ','https://library.unr.edu/places/delamare/themakerspace', 54);
+--Chemistry Help Center
+INSERT INTO webservices_resource values (10, 'Chemistry Help Center','Room 320','M-F:10:00am - 4:00pm ','https://www.unr.edu/chemistry/student-resources/chemistry-help-center', 79);
+--Engineering tutoring 
+INSERT INTO webservices_resource values (11, 'Engineering Tutoring ','Room 133','Tutoring Hours on website ','https://www.unr.edu/engineering/student-resources/tutoring', 1);
+--Physics Help Center
+INSERT INTO webservices_resource values (12, 'Physics Instructional Support Center','Room 320','M-F:9:00am-4:00pm ','https://www.unr.edu/physics/student-resources/physics-help', 79);
+--University Testing Center
+INSERT INTO webservices_resource values (13, 'University Testing Center','Room 1003','M-F:9:00am - 5:00pm','https://www.unr.edu/testing-center', 106);
+--University Tutoring Center
+INSERT INTO webservices_resource values (14, 'University Tutoring Center. Services include free appointments, Nevada PASS sessions, walk-in labs and weekly small group sessions.','Room 320','M-F: ','https://www.unr.edu/tutoring-center', 79);
+--Cashier's Office
+INSERT INTO webservices_resource values (15, 'Cashiers Office','Room 0124 ','M-F:9:00am - 5:00pm ','https://www.unr.edu/campus-business/controllers-office/cashiers-office', 33);
+--Office of International Students and Scholars
+INSERT INTO webservices_resource values (16, 'Office of International Students and Scholars','Room 330','M-F: 8:00am - 5:00pm','https://www.unr.edu/oiss', 33);
+--University Police Services
+INSERT INTO webservices_resource values (18, 'University Police Department-Northern Command','Ground Floor Seperate Entrance facing southward','M-F:7:30am - 4:30pm','https://www.unr.edu/police', 33);
+--Admissions & Records
+INSERT INTO webservices_resource values (19, 'Admissions & Records','2cd Floor Call (775)784-4700','M-F:8:00-5:00pm','https://www.unr.edu/admissions/records', 33);
+INSERT INTO webservices_resource values (20, 'Transfer Center','2cd Floor','M-F:8:00-5:00pm','https://www.unr.edu/admissions/records', 33);
+INSERT INTO webservices_resource values (21, 'Graduate School','Room 225','M-F:8:00-5:00pm','https://www.unr.edu/grad', 33);
+--Equal Opportunity & Title IX
+INSERT INTO webservices_resource values (22, 'Equal Opportunity & Title IX','Room 206','M-F:8:00-5:00pm','websihttps://www.unr.edu/equal-opportunity-title-ixte', 108);
+--Office of Financial Aid and Scholarships
+INSERT INTO webservices_resource values (23, 'Office of Financial Aid and Scholarships','Room 319','M-Th:8:00am - 5:00pm, F:9:00am - 5:00pm','https://www.unr.edu/financial-aid', 33);
+--Money Mentors
+INSERT INTO webservices_resource values (24, 'Money Mentors','3rd Floor in Financial Aid Office','M-F:8:00am - 5:00pm','https://www.unr.edu/nevada-money-mentors', 33);
+
+
+
+
+
+INSERT INTO webservices_resource values (, 'Des','Room 236','M-F:','website', );
+
