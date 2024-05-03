@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.lifecycle.ProcessCameraProvider;
@@ -129,16 +127,22 @@ public class MoreInfo extends AppCompatActivity {
         buildingCode = findViewById(R.id.building_code_textView);
         buildingNumber = (findViewById(R.id.building_number_textView));
         hours = (findViewById(R.id.hours_textView));
+        
         resourcesListView = (findViewById(R.id.resources_listView));
         resourcesTextView = (findViewById(R.id.resources_textView));
+        
         restroomsListView = (findViewById(R.id.restrooms_listView));
         restroomsTextView = (findViewById(R.id.restrooms_textView));
+        
         elevatorsListView = (findViewById(R.id.elevators_listView));
         elevatorsTextView = (findViewById(R.id.elevators_textView));
+        
         staircasesListView = (findViewById(R.id.staircases_listView));
         staircasesTextView = (findViewById(R.id.staircases_textView));
+        
         amenitiesListView = findViewById(R.id.amenities_listView);
         amenitiesTextView = (findViewById(R.id.amenities_textView));
+        
         diningOptionsListView = findViewById(R.id.dining_options_listView);
         diningOptionsTextView = findViewById(R.id.dining_options_textView);
 
@@ -161,6 +165,20 @@ public class MoreInfo extends AppCompatActivity {
 
         // Update the UI elements with the building information
         updateMoreInfo(building);
+
+        resourcesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openWeblink(position, resourcesListView);
+            }
+        });
+
+        diningOptionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openWeblink(position, diningOptionsListView);
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,10 +219,49 @@ public class MoreInfo extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void updateMoreInfo(Building building) {
         if (building != null) {
-            buildingName.setText(building.getName());
+
+            String buildingNameText = building.getName();
+            float textSize = 24f;
+            while (buildingName.getPaint().measureText(buildingNameText) > buildingName.getWidth() - 12) {
+                textSize -= 2f;
+                if (textSize < 18f) {
+                    break;
+                }
+            }
+            buildingName.setTextSize(textSize);
+            buildingName.setText(buildingNameText);
+
             buildingCode.setText(building.getBuildingCode());
             buildingNumber.setText(building.getBuildingNum());
-            hours.setText(building.getOperatingHours());
+
+            String operatingHours = building.getOperatingHours();
+            StringBuilder updatedOperatingHours = new StringBuilder();
+            int amPmCount = 0;
+            for (String day : operatingHours.split(" ")) {
+                updatedOperatingHours.append(day).append(" ");
+                if (day.contains("AM") || day.contains("PM")) {
+                    amPmCount++;
+                    if (amPmCount == 2) {
+                        updatedOperatingHours.deleteCharAt(updatedOperatingHours.length() - 1);
+                        updatedOperatingHours.append("\n");
+                        amPmCount = 0;
+                    }
+                }
+            }
+            hours.setText(updatedOperatingHours.toString());
+            Log.d("OperatingHours", updatedOperatingHours.toString());
+
+            ImageView buildingImage = findViewById(R.id.buildingImage);
+                String buildingCode = building.getBuildingCode().toLowerCase();
+                String filename = buildingCode.replace("-", "_");
+                int resourceId = getResources().getIdentifier(filename, "drawable", getPackageName());
+                if (resourceId == 0) {
+                    // If the resource ID is not found, hide the ImageView
+                    buildingImage.setVisibility(View.GONE);
+                } else {
+                    // If the resource ID is found, set the image
+                    buildingImage.setImageResource(resourceId);
+                }
 
             List<String> resourcesList = buildResourcesList(building);
             if (!resourcesList.isEmpty()) {
@@ -495,10 +552,13 @@ public class MoreInfo extends AppCompatActivity {
         // Apply color blindness filter
         ColorBlind.applyColorBlindMode(getWindow().getDecorView().getRootView(), colorBlindnessMode);
     }
-    private void openWeblink(String weblink) {
-        Uri uri = Uri.parse(weblink);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+    private void openWeblink(int index, AdapterView<?> listView) {
+        String text = listView.getItemAtPosition(index).toString();
+        if (Patterns.WEB_URL.matcher(text).matches()) {
+            Uri uri = Uri.parse(text);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
     }
 
     public String connectToWebService(String urlString) {
