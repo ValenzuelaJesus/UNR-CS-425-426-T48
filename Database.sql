@@ -702,6 +702,53 @@ INSERT INTO webservices_resource values (23, 'Office of Financial Aid and Schola
 --Money Mentors
 INSERT INTO webservices_resource values (24, 'Money Mentors','3rd Floor in Financial Aid Office','M-F:8:00am - 5:00pm','https://www.unr.edu/nevada-money-mentors', 33);
 
+--SEM
+INSERT INTO webservices_staircase values (2, 'Located left of South Entrance', 1);
+INSERT INTO webservices_staircase values (3, 'Located towards the right of North Entrance in car parking', 1);
+INSERT INTO webservices_staircase values (4, 'Located towards west of the building near loading docks facing street access.', 1);
+--M745
+INSERT INTO webservices_resource values (25, 'Patient-Centered Family Medicine | Operated by Renown','First Floor','M-F:8:00am - 5:00pm','https://www.renown.org/health-services/university-health', 2);
+--AE
+--AB
+INSERT INTO webservices_staircase values (5, 'Located Right from North Entrance past room 108. Door will be to the left.', 4);
+INSERT INTO webservices_staircase values (6, 'Located Left from North Entrance. Door will be to the right.', 4);
+INSERT INTO webservices_staircase values (7, 'Located in front of North Entrance connects first and second floors.', 4);
+INSERT INTO webservices_elevator values (2, 'When entering from the North the elevators will be just ahead to the right.', 4);
+--AHS
+--ARF
+--ARTM
+--PD
+--FRX
+--CH
+INSERT INTO webservices_vendingmachine values (2, 'Room 03 Near Entrance opposite of Room 05 Laundry', 'Drink', 11);
+INSERT INTO webservices_staircase values (11, 'Right from Entrance', 11);
+--CS
+--CMM
+--CB
+--CCF
+--CFA
+--CA
+--SAB
+--CC
+--LTD
+--DMSC
+INSERT INTO webservices_restroom values (96,'Restrooms located to the right of the North facing Entrance',TRUE, 21);
+INSERT INTO webservices_restroom values (97,'Restrooms located to the South Corner near Siera Street Subs',TRUE, 21);
+INSERT INTO webservices_lab values (2, 'Second Floor of the Facility','Physics','ENG',21);
+INSERT INTO webservices_staircase values (9, 'Located Near South Entrance', 21);
+--PDO
+--DCC
+--EEL
+--EJCH
+INSERT INTO webservices_staircase values (10, 'Right from East Facing Entrance. Down the Hall from South facing Entrance', 25);
+
+
+
+
+
+
+
+
 
 
 
