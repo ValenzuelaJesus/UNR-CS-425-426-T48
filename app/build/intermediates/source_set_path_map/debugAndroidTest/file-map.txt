@@ -1,6 +1,0 @@
-com.example.senior.test.app-annotation-experimental-1.3.1-0 C:\Users\packn\.gradle\caches\transforms-3\0b019c03cd0e35f80fad19ee98514be4\transformed\annotation-experimental-1.3.1\res
-com.example.senior.test.app-core-1.5.0-1 C:\Users\packn\.gradle\caches\transforms-3\4e5fe80f5f76ff43c422bdb6dae0e007\transformed\core-1.5.0\res
-com.example.senior.test.app-androidTest-2 C:\Users\packn\Senior\app\build\generated\res\resValues\androidTest\debug
-com.example.senior.test.app-mergeDebugAndroidTestResources-3 C:\Users\packn\Senior\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.example.senior.test.app-mergeDebugAndroidTestResources-4 C:\Users\packn\Senior\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.example.senior.test.app-merged_res-5 C:\Users\packn\Senior\app\build\intermediates\merged_res\debugAndroidTest
